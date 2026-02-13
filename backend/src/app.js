@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config(); // Automatically reads backend/.env
+require('dotenv').config();
 
 const { Pool } = require('pg');
 const authRoutes = require('./routes/auth');
@@ -25,7 +25,7 @@ const pool = new Pool({
   port: parseInt(process.env.PG_PORT) || 5432,
 });
 
-// Test DB connection immediately
+// Test DB connection
 pool.query('SELECT NOW()')
   .then(res => {
     console.log('PostgreSQL connected:', res.rows);
@@ -37,7 +37,7 @@ pool.query('SELECT NOW()')
 app.use(cors());
 app.use(express.json());
 
-// Root test route
+// Root route
 app.get('/', (req, res) => {
   res.send('Backend Running');
 });
