@@ -46,6 +46,9 @@ const Navbar = ({ role, activeTab, setActiveTab }) => {
                 <div className="role-badge-container">
                     <span className="role-badge">Ngo</span>
                 </div>
+                <button className="nav-icon-btn" onClick={() => navigate('/profile')} title="My Profile">
+                    <User size={20} />
+                </button>
                 <button className="nav-icon-btn">
                     <Bell size={20} />
                 </button>

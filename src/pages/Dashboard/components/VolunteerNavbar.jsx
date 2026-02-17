@@ -17,7 +17,8 @@ const VolunteerNavbar = ({ activeTab, setActiveTab }) => {
     const tabs = [
         { id: 'dashboard', label: 'Dashboard' },
         { id: 'opportunities', label: 'Opportunities' },
-        { id: 'messages', label: 'Messages' }
+        { id: 'messages', label: 'Messages' },
+        { id: 'profile', label: 'Profile' }
     ];
 
     return (
@@ -30,7 +31,13 @@ const VolunteerNavbar = ({ activeTab, setActiveTab }) => {
                     <div
                         key={tab.id}
                         className={`v-nav-item ${activeTab === tab.id ? 'active' : ''}`}
-                        onClick={() => setActiveTab(tab.id)}
+                        onClick={() => {
+                            if (tab.id === 'profile') {
+                                navigate('/profile');
+                            } else {
+                                setActiveTab(tab.id);
+                            }
+                        }}
                     >
                         {tab.label}
                     </div>

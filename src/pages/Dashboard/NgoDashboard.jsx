@@ -17,8 +17,8 @@ const NgoDashboard = () => {
     // Data structured to be passed via props or state in the future
     const [dashboardData, setDashboardData] = useState({
         organization: {
-            name: user?.organizationName || '',
-            role: 'Ngo'
+            name: user?.organization_name || user?.organizationName || '',
+            role: 'NGO/Organisation'
         },
         metrics: {
             opportunitiesCount: 3,
@@ -54,22 +54,20 @@ const NgoDashboard = () => {
     }, []);
 
     useEffect(() => {
-        // This is where real data fetching would happen
         if (user) {
             setDashboardData(prev => ({
                 ...prev,
                 organization: {
                     ...prev.organization,
-                    name: user.organizationName || 'SkillBridge Partner',
-                    role: 'Organization Administrator'
+                    name: user.organization_name || user.organizationName || 'SkillBridge Partner',
+                    role: user.role || 'NGO/Organisation'
                 }
             }));
         }
     }, [user]);
 
     useEffect(() => {
-        if (!isLoading && (!user || user.role !== 'ngo')) {
-            // Uncomment this for real role protection
+        if (!isLoading && (!user || user.role !== 'NGO/Organisation')) {
             // navigate('/login');
         }
     }, [user, isLoading, navigate]);

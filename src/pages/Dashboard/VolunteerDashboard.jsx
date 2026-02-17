@@ -13,8 +13,8 @@ const VolunteerDashboard = () => {
     // State structured for backend integration
     const [volunteerData, setVolunteerData] = useState({
         profile: {
-            name: user?.name || '',
-            initials: user?.name ? user.name.split(' ').map(n => n[0]).join('') : '',
+            name: user?.full_name || user?.fullName || user?.username || '',
+            initials: (user?.full_name || user?.fullName || user?.username) ? (user.full_name || user.fullName || user.username).split(' ').map(n => n[0]).join('') : '',
             role: 'Volunteer',
             skills: user?.skills || [],
             recentActivity: []
@@ -70,13 +70,14 @@ const VolunteerDashboard = () => {
 
     useEffect(() => {
         if (user) {
+            const displayName = user.full_name || user.fullName || user.username || '';
             setVolunteerData(prev => ({
                 ...prev,
                 profile: {
                     ...prev.profile,
-                    name: user.name,
-                    initials: user.name.split(' ').map(n => n[0]).join(''),
-                    skills: user.skills || []
+                    name: displayName,
+                    initials: displayName ? displayName.split(' ').map(n => n[0]).join('') : '',
+                    skills: user.skills ? (typeof user.skills === 'string' ? user.skills.split(',') : user.skills) : []
                 }
             }));
         }

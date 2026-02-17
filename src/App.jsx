@@ -5,6 +5,7 @@ import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import NgoDashboard from './pages/Dashboard/NgoDashboard';
 import VolunteerDashboard from './pages/Dashboard/VolunteerDashboard';
+import Profile from './pages/Profile/Profile';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/ngodashboard" element={<NgoDashboard />} />
           <Route path="/volunteerdashboard" element={<VolunteerDashboard />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </AuthProvider>

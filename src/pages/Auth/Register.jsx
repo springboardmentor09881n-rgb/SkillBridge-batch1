@@ -6,14 +6,16 @@ import Select from '../../components/common/Select';
 import Textarea from '../../components/common/Textarea';
 import { registerUser } from '../../services/api';
 import { ArrowLeft } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import './Auth.css';
 
 const Register = () => {
     const navigate = useNavigate();
+    const { login } = useAuth();
     const location = useLocation();
 
-    // Check if role was passed in navigation state, default to 'volunteer'
-    const initialIam = location.state?.iam || 'volunteer';
+    // Check if role was passed in navigation state, default to 'Volunteer'
+    const initialIam = location.state?.iam || 'Volunteer';
     const [iam, setIam] = useState(initialIam);
     const [formData, setFormData] = useState({
         username: '',
@@ -29,6 +31,12 @@ const Register = () => {
     });
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+
+    React.useEffect(() => {
+        if (location.state?.iam) {
+            setIam(location.state.iam);
+        }
+    }, [location.state]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -50,22 +58,22 @@ const Register = () => {
         setIsLoading(true);
         setError('');
 
-        // Format payload based on role
+        // Format payload based on role using snake_case for backend
         const payload = {
             username: formData.username,
             email: formData.email,
             password: formData.password,
-            fullName: formData.fullName,
+            full_name: formData.fullName,
             role: iam,
             location: formData.location
         };
 
-        if (iam === 'volunteer') {
+        if (iam === 'Volunteer') {
             payload.skills = formData.skills;
         } else {
-            payload.organizationName = formData.organizationName;
-            payload.organizationDescription = formData.organizationDescription;
-            payload.websiteUrl = formData.websiteUrl;
+            payload.organization_name = formData.organizationName;
+            payload.organization_description = formData.organizationDescription;
+            payload.website_url = formData.websiteUrl;
         }
 
         const result = await registerUser(payload);
@@ -75,8 +83,8 @@ const Register = () => {
         if (result.success) {
             alert('Registration successful!');
             localStorage.setItem('token', result.data.token);
-            localStorage.setItem('user', JSON.stringify(result.data.user));
-            navigate(iam === 'volunteer' ? '/volunteer-dashboard' : '/ngo-dashboard');
+            login(result.data.user);
+            navigate(iam === 'Volunteer' ? '/volunteerdashboard' : '/ngodashboard');
         } else {
             if (result.errors) {
                 const firstError = Object.values(result.errors)[0];
@@ -159,8 +167,8 @@ const Register = () => {
                         value={iam}
                         onChange={handleIamChange}
                         options={[
-                            { value: 'volunteer', label: 'Volunteer' },
-                            { value: 'ngo', label: 'NGO / Organization' }
+                            { value: 'Volunteer', label: 'Volunteer' },
+                            { value: 'NGO/Organisation', label: 'NGO / Organization' }
                         ]}
                     />
 
@@ -172,7 +180,7 @@ const Register = () => {
                         onChange={handleChange}
                     />
 
-                    {iam === 'volunteer' && (
+                    {iam === 'Volunteer' && (
                         <Input
                             id="skills"
                             label="Skills (Optional)"
@@ -182,7 +190,7 @@ const Register = () => {
                         />
                     )}
 
-                    {iam === 'ngo' && (
+                    {iam === 'NGO/Organisation' && (
                         <>
                             <Input
                                 id="organizationName"

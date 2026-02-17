@@ -14,7 +14,7 @@ const Login = () => {
         identifier: '',
         password: ''
     });
-    const [iam, setIam] = useState('volunteer'); // For mock login, user chooses role to sim
+    const [iam, setIam] = useState('Volunteer'); // For mock login, user chooses role to sim
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -31,18 +31,19 @@ const Login = () => {
 
         const result = await loginUser({
             identifier: formData.identifier,
-            password: formData.password
-        }, iam);
+            password: formData.password,
+            role: iam
+        });
 
         setIsLoading(false);
 
         if (result.success) {
             login(result.data.user);
             alert('Login successful!');
-            localStorage.setItem('token', result.data.token);
+            // Token is already stored in api.js:loginUser
             // Navigate based on actual role from backend
             const role = result.data.user.role;
-            navigate(role === 'volunteer' ? '/volunteerdashboard' : '/ngodashboard');
+            navigate(role === 'Volunteer' ? '/volunteerdashboard' : '/ngodashboard');
         } else {
             setError(result.message);
         }
@@ -68,15 +69,15 @@ const Login = () => {
                 <div className="role-toggle">
                     <button
                         type="button"
-                        className={`role-toggle-btn ${iam === 'volunteer' ? 'active' : ''}`}
-                        onClick={() => setIam('volunteer')}
+                        className={`role-toggle-btn ${iam === 'Volunteer' ? 'active' : ''}`}
+                        onClick={() => setIam('Volunteer')}
                     >
                         Volunteer
                     </button>
                     <button
                         type="button"
-                        className={`role-toggle-btn ${iam === 'ngo' ? 'active' : ''}`}
-                        onClick={() => setIam('ngo')}
+                        className={`role-toggle-btn ${iam === 'NGO/Organisation' ? 'active' : ''}`}
+                        onClick={() => setIam('NGO/Organisation')}
                     >
                         NGO
                     </button>
