@@ -2,31 +2,64 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
+import { loginUser } from '../../services/api';
+import { ArrowLeft } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import './Auth.css';
 
 const Login = () => {
     const navigate = useNavigate();
+    const { login } = useAuth();
     const [formData, setFormData] = useState({
         identifier: '',
         password: ''
     });
-    const [role, setRole] = useState('volunteer'); // For mock login, user chooses role to sim
+    const [iam, setIam] = useState('volunteer'); // For mock login, user chooses role to sim
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
+        if (error) setError('');
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Simulate login
-        console.log('Logging in as:', role, formData);
-        alert(`Login simulated for ${role}: ${formData.identifier}`);
+
+        setIsLoading(true);
+        setError('');
+
+        const result = await loginUser({
+            identifier: formData.identifier,
+            password: formData.password
+        }, iam);
+
+        setIsLoading(false);
+
+        if (result.success) {
+            login(result.data.user);
+            alert('Login successful!');
+            localStorage.setItem('token', result.data.token);
+            // Navigate based on actual role from backend
+            const role = result.data.user.role;
+            navigate(role === 'volunteer' ? '/volunteerdashboard' : '/ngodashboard');
+        } else {
+            setError(result.message);
+        }
     };
 
     return (
         <div className="auth-container">
             <div className="auth-card">
                 <div className="auth-header">
+                    <button
+                        className="back-button"
+                        onClick={() => navigate('/')}
+                        title="Back to Home"
+                    >
+                        <ArrowLeft size={20} />
+                        <span>Back</span>
+                    </button>
                     <h1 className="auth-title">Welcome Back</h1>
                     <p className="auth-subtitle">Sign in to continue your journey</p>
                 </div>
@@ -35,21 +68,22 @@ const Login = () => {
                 <div className="role-toggle">
                     <button
                         type="button"
-                        className={`role-toggle-btn ${role === 'volunteer' ? 'active' : ''}`}
-                        onClick={() => setRole('volunteer')}
+                        className={`role-toggle-btn ${iam === 'volunteer' ? 'active' : ''}`}
+                        onClick={() => setIam('volunteer')}
                     >
                         Volunteer
                     </button>
                     <button
                         type="button"
-                        className={`role-toggle-btn ${role === 'ngo' ? 'active' : ''}`}
-                        onClick={() => setRole('ngo')}
+                        className={`role-toggle-btn ${iam === 'ngo' ? 'active' : ''}`}
+                        onClick={() => setIam('ngo')}
                     >
                         NGO
                     </button>
                 </div>
 
                 <form className="auth-form" onSubmit={handleSubmit}>
+                    {error && <div className="auth-error-message">{error}</div>}
                     <Input
                         id="identifier"
                         label="Username or Email"
@@ -70,8 +104,14 @@ const Login = () => {
                         required
                     />
 
-                    <Button type="submit" size="lg" className="w-full" style={{ width: '100%' }}>
-                        Sign In
+                    <Button
+                        type="submit"
+                        size="lg"
+                        className="w-full"
+                        style={{ width: '100%' }}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? 'Signing In...' : 'Sign In'}
                     </Button>
                 </form>
 

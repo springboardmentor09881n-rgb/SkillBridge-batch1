@@ -1,49 +1,110 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Select from '../../components/common/Select';
 import Textarea from '../../components/common/Textarea';
+import { registerUser } from '../../services/api';
+import { ArrowLeft } from 'lucide-react';
 import './Auth.css';
 
 const Register = () => {
     const navigate = useNavigate();
-    const [role, setRole] = useState('volunteer');
+    const location = useLocation();
+
+    // Check if role was passed in navigation state, default to 'volunteer'
+    const initialIam = location.state?.iam || 'volunteer';
+    const [iam, setIam] = useState(initialIam);
     const [formData, setFormData] = useState({
         username: '',
-        full_name: '',
+        fullName: '',
         email: '',
         password: '',
+        confirmPassword: '',
         location: '',
         skills: '',
-        organization_name: '',
-        organization_description: '',
-        website_url: ''
+        organizationName: '',
+        organizationDescription: '',
+        websiteUrl: ''
     });
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
+        if (error) setError('');
     };
 
-    const handleRoleChange = (e) => {
-        setRole(e.target.value);
+    const handleIamChange = (e) => {
+        setIam(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Registering as:', role, formData);
-        alert(`Registration simulated for ${role}: ${formData.username || formData.email}`);
+
+        if (formData.password !== formData.confirmPassword) {
+            setError('Passwords do not match');
+            return;
+        }
+
+        setIsLoading(true);
+        setError('');
+
+        // Format payload based on role
+        const payload = {
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+            fullName: formData.fullName,
+            role: iam,
+            location: formData.location
+        };
+
+        if (iam === 'volunteer') {
+            payload.skills = formData.skills;
+        } else {
+            payload.organizationName = formData.organizationName;
+            payload.organizationDescription = formData.organizationDescription;
+            payload.websiteUrl = formData.websiteUrl;
+        }
+
+        const result = await registerUser(payload);
+
+        setIsLoading(false);
+
+        if (result.success) {
+            alert('Registration successful!');
+            localStorage.setItem('token', result.data.token);
+            localStorage.setItem('user', JSON.stringify(result.data.user));
+            navigate(iam === 'volunteer' ? '/volunteer-dashboard' : '/ngo-dashboard');
+        } else {
+            if (result.errors) {
+                const firstError = Object.values(result.errors)[0];
+                setError(firstError);
+            } else {
+                setError(result.message);
+            }
+        }
     };
 
     return (
         <div className="auth-container">
             <div className="auth-card">
                 <div className="auth-header">
+                    <button
+                        className="back-button"
+                        onClick={() => navigate('/')}
+                        title="Back to Home"
+                    >
+                        <ArrowLeft size={20} />
+                        <span>Back</span>
+                    </button>
                     <h1 className="auth-title">Create an Account</h1>
                     <p className="auth-subtitle">Join SkillBridge to connect with NGOs and volunteering opportunities</p>
                 </div>
 
                 <form className="auth-form" onSubmit={handleSubmit}>
+                    {error && <div className="auth-error-message">{error}</div>}
                     <Input
                         id="username"
                         label="Username"
@@ -74,19 +135,29 @@ const Register = () => {
                     />
 
                     <Input
-                        id="full_name"
+                        id="confirmPassword"
+                        label="Confirm Password"
+                        type="password"
+                        placeholder="Confirm your password"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        required
+                    />
+
+                    <Input
+                        id="fullName"
                         label="Full Name"
                         placeholder="Enter your full name or organization contact name"
-                        value={formData.full_name}
+                        value={formData.fullName}
                         onChange={handleChange}
                         required
                     />
 
                     <Select
-                        id="role"
+                        id="iam"
                         label="I am a"
-                        value={role}
-                        onChange={handleRoleChange}
+                        value={iam}
+                        onChange={handleIamChange}
                         options={[
                             { value: 'volunteer', label: 'Volunteer' },
                             { value: 'ngo', label: 'NGO / Organization' }
@@ -101,7 +172,7 @@ const Register = () => {
                         onChange={handleChange}
                     />
 
-                    {role === 'volunteer' && (
+                    {iam === 'volunteer' && (
                         <Input
                             id="skills"
                             label="Skills (Optional)"
@@ -111,35 +182,41 @@ const Register = () => {
                         />
                     )}
 
-                    {role === 'ngo' && (
+                    {iam === 'ngo' && (
                         <>
                             <Input
-                                id="organization_name"
+                                id="organizationName"
                                 label="Organization Name"
                                 placeholder="Enter your organization's name"
-                                value={formData.organization_name}
+                                value={formData.organizationName}
                                 onChange={handleChange}
                                 required
                             />
                             <Textarea
-                                id="organization_description"
+                                id="organizationDescription"
                                 label="Organization Description"
                                 placeholder="Tell us about your organization's mission and goals"
-                                value={formData.organization_description}
+                                value={formData.organizationDescription}
                                 onChange={handleChange}
                             />
                             <Input
-                                id="website_url"
+                                id="websiteUrl"
                                 label="Website URL (Optional)"
                                 placeholder="https://yourorganization.org"
-                                value={formData.website_url}
+                                value={formData.websiteUrl}
                                 onChange={handleChange}
                             />
                         </>
                     )}
 
-                    <Button type="submit" size="lg" className="w-full mt-4" style={{ width: '100%', backgroundColor: '#6366f1' }}>
-                        Create Account
+                    <Button
+                        type="submit"
+                        size="lg"
+                        className="w-full mt-4"
+                        style={{ width: '100%', backgroundColor: '#6366f1' }}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? 'Creating Account...' : 'Create Account'}
                     </Button>
 
                     <div className="auth-footer">
