@@ -22,7 +22,7 @@ const VolunteerDashboard = () => {
         profile: {
             name: user?.full_name || user?.fullName || user?.username || '',
             initials: (user?.full_name || user?.fullName || user?.username) ? (user.full_name || user.fullName || user.username).split(' ').map(n => n[0]).join('') : '',
-            role: 'volunteer',
+            role: 'Volunteer',
             skills: user?.skills || [],
             recentActivity: []
         },

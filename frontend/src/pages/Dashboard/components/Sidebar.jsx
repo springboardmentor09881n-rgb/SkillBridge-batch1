@@ -36,7 +36,7 @@ const Sidebar = ({ organization, activeTab, recentActivity = [] }) => {
                     </div>
                     <div className="profile-info overflow-hidden min-w-0 flex-1">
                         <h3 className="m-0 text-lg font-semibold text-[var(--text-primary)] truncate" title={organization?.name}>{organization?.name || 'NGO'}</h3>
-                        <p className="profile-role-subtext text-sm text-[var(--text-muted)] mt-1 capitalize truncate" title="NGO">ngo</p>
+                        <p className="profile-role-subtext text-sm text-[var(--text-muted)] mt-1 truncate" title="NGO">NGO/Organisation</p>
                     </div>
                 </div>
 

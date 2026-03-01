@@ -14,8 +14,8 @@ const Register = () => {
     const { login } = useAuth();
     const location = useLocation();
 
-    // Check if role was passed in navigation state, default to 'volunteer'
-    const initialIam = location.state?.iam || 'volunteer';
+    // Check if role was passed in navigation state, default to 'Volunteer'
+    const initialIam = location.state?.iam || 'Volunteer';
     const [iam, setIam] = useState(initialIam);
     const [formData, setFormData] = useState({
         username: '',
@@ -68,7 +68,7 @@ const Register = () => {
             location: formData.location
         };
 
-        if (iam === 'volunteer') {
+        if (iam === 'Volunteer') {
             payload.skills = formData.skills;
         } else {
             payload.organization_name = formData.organizationName;
@@ -84,7 +84,7 @@ const Register = () => {
             alert('Registration successful!');
             localStorage.setItem('token', result.data.token);
             login(result.data.user);
-            navigate(iam === 'volunteer' ? '/volunteer/dashboard' : '/ngo/dashboard');
+            navigate(iam === 'Volunteer' ? '/volunteer/dashboard' : '/ngo/dashboard');
         } else {
             if (result.errors) {
                 const firstError = Object.values(result.errors)[0];
@@ -167,8 +167,8 @@ const Register = () => {
                         value={iam}
                         onChange={handleIamChange}
                         options={[
-                            { value: 'volunteer', label: 'Volunteer' },
-                            { value: 'ngo/organization', label: 'NGO / Organization' }
+                            { value: 'Volunteer', label: 'Volunteer' },
+                            { value: 'NGO/Organisation', label: 'NGO / Organization' }
                         ]}
                     />
 
@@ -180,7 +180,7 @@ const Register = () => {
                         onChange={handleChange}
                     />
 
-                    {iam === 'volunteer' && (
+                    {iam === 'Volunteer' && (
                         <Input
                             id="skills"
                             label="Skills (Optional)"
@@ -190,7 +190,7 @@ const Register = () => {
                         />
                     )}
 
-                    {iam === 'ngo/organization' && (
+                    {iam === 'NGO/Organisation' && (
                         <>
                             <Input
                                 id="organizationName"

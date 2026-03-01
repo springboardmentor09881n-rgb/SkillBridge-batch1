@@ -9,7 +9,7 @@ const OpportunityDetails = ({ appliedOpps = [], onApply = () => { } }) => {
     const { user } = useAuth();
 
     // Check if the current user is an NGO
-    const isNgo = user?.role === 'ngo/organization';
+    const isNgo = user?.role === 'NGO/Organisation';
     const backRoute = isNgo ? '/ngo/opportunities' : '/volunteer/opportunities';
 
     // State to manage the opportunity object locally for this view

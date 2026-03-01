@@ -47,7 +47,7 @@ const Profile = () => {
         skills: authUser?.skills ? (Array.isArray(authUser.skills) ? authUser.skills.join(', ') : authUser.skills) : profileData.skills
     };
 
-    const isVolunteer = user.role === 'volunteer';
+    const isVolunteer = user.role === 'Volunteer';
 
     return (
         <div className="profile-page-container">

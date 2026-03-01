@@ -25,7 +25,7 @@ const NgoDashboard = () => {
     const initialMockData = {
         organization: {
             name: user?.organization_name || user?.organizationName || '',
-            role: 'ngo/organization'
+            role: 'NGO/Organisation'
         },
         metrics: {
             opportunitiesCount: 3,
@@ -49,7 +49,7 @@ const NgoDashboard = () => {
     const [dashboardData, setDashboardData] = useState({
         organization: {
             name: user?.organization_name || user?.organizationName || user?.full_name || '',
-            role: user?.role || 'ngo/organization',
+            role: user?.role || 'NGO/Organisation',
             location: user?.location || '',
             website_url: user?.website_url || '',
             email: user?.email || ''
@@ -102,7 +102,7 @@ const NgoDashboard = () => {
                     organization: {
                         ...prev.organization,
                         name: profileRes.user.organization_name || profileRes.user.full_name || 'SkillBridge Partner',
-                        role: profileRes.user.role || 'ngo/organization',
+                        role: profileRes.user.role || 'NGO/Organisation',
                         location: profileRes.user.location || '',
                         website_url: profileRes.user.website_url || '',
                         email: profileRes.user.email || ''
@@ -115,7 +115,7 @@ const NgoDashboard = () => {
                     organization: {
                         ...prev.organization,
                         name: user.organization_name || user.organizationName || user.full_name || 'SkillBridge Partner',
-                        role: user.role || 'ngo/organization',
+                        role: user.role || 'NGO/Organisation',
                         location: user.location || '',
                         website_url: user.website_url || '',
                         email: user.email || ''
@@ -128,7 +128,7 @@ const NgoDashboard = () => {
     }, [user]);
 
     useEffect(() => {
-        if (!isLoading && (!user || user.role !== 'ngo/organization')) {
+        if (!isLoading && (!user || user.role !== 'NGO/Organisation')) {
             // navigate('/login');
         }
     }, [user, isLoading, navigate]);

@@ -172,7 +172,7 @@ const Home = () => {
                                 <li><CheckCircle2 size={16} /> Professional Portfolio Tracking</li>
                                 <li><CheckCircle2 size={16} /> Personal Impact ROI Dashboard</li>
                             </ul>
-                            <Button className="w-full" onClick={() => navigate('/register', { state: { iam: 'volunteer' } })}>
+                            <Button className="w-full" onClick={() => navigate('/register', { state: { iam: 'Volunteer' } })}>
                                 Join as Volunteer
                             </Button>
                         </motion.div>
@@ -195,7 +195,7 @@ const Home = () => {
                                 <li><CheckCircle2 size={16} /> Integrated Messaging System</li>
                                 <li><CheckCircle2 size={16} /> Engagement & Outcome Analytics</li>
                             </ul>
-                            <Button className="w-full" onClick={() => navigate('/register', { state: { iam: 'ngo/organization' } })}>
+                            <Button className="w-full" onClick={() => navigate('/register', { state: { iam: 'NGO/Organisation' } })}>
                                 Register Organization
                             </Button>
                         </motion.div>

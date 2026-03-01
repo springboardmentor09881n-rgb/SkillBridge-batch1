@@ -18,7 +18,7 @@ const Header = ({ role }) => {
     };
 
     // Support all variations of NGO role that might be returned
-    const isNgo = role === 'NGO' || role === 'ngo/organization' || role === 'ngo';
+    const isNgo = role === 'NGO' || role === 'NGO/Organisation';
     const basePath = isNgo ? '/ngo' : '/volunteer';
 
     const navItems = isNgo

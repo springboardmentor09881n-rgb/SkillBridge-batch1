@@ -42,7 +42,7 @@ const Login = () => {
 
                 // Navigate based on role from backend
                 const role = result.data.user.role
-                navigate(role === 'volunteer' ? '/volunteer/dashboard' : '/ngo/dashboard')
+                navigate(role === 'Volunteer' ? '/volunteer/dashboard' : '/ngo/dashboard')
             } else {
                 setError(result.message)
             }
