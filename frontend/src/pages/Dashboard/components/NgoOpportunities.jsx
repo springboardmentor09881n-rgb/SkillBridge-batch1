@@ -45,15 +45,16 @@ const NgoOpportunities = () => {
     const [opportunities, setOpportunities] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    const fetchOpportunities = async () => {
+        setIsLoading(true);
+        const result = await getNgoOpportunities();
+        if (result.success) {
+            setOpportunities(result.data || []);
+        }
+        setIsLoading(false);
+    };
+
     useEffect(() => {
-        const fetchOpportunities = async () => {
-            setIsLoading(true);
-            const result = await getNgoOpportunities();
-            if (result.success) {
-                setOpportunities(result.data || []);
-            }
-            setIsLoading(false);
-        };
         fetchOpportunities();
     }, []);
 
@@ -66,21 +67,35 @@ const NgoOpportunities = () => {
 
     const handleEditClick = (opp) => {
         setEditingOppId(opp.id);
-        setEditFormData({ ...opp, tagsString: opp.tags.join(', ') });
+        const tagsString = Array.isArray(opp.tags) ? opp.tags.join(', ') : (opp.skills_required ? opp.skills_required.join(', ') : '');
+        setEditFormData({ ...opp, tagsString });
     };
 
-    const handleEditSave = () => {
-        // Update local state mock
-        setOpportunities(opportunities.map(opp =>
-            opp.id === editingOppId
-                ? {
-                    ...opp,
-                    ...editFormData,
-                    tags: editFormData.tagsString.split(',').map(t => t.trim()).filter(Boolean)
-                }
-                : opp
-        ));
-        setEditingOppId(null);
+    const handleEditSave = async () => {
+        const payload = {
+            ...editFormData,
+            tags: editFormData.tagsString.split(',').map(t => t.trim()).filter(Boolean)
+        };
+        delete payload.tagsString;
+
+        const result = await updateOpportunity(editingOppId, payload);
+        if (result.success) {
+            setEditingOppId(null);
+            fetchOpportunities(); // Refresh list
+        } else {
+            alert(result.message || 'Failed to save changes');
+        }
+    };
+
+    const handleCloseOpportunity = async (oppId) => {
+        if (window.confirm('Are you sure you want to close this opportunity?')) {
+            const result = await updateOpportunity(oppId, { status: 'Closed' });
+            if (result.success) {
+                fetchOpportunities(); // Refresh list
+            } else {
+                alert(result.message || 'Failed to close opportunity');
+            }
+        }
     };
 
     const filteredOpportunities = opportunities.filter(opp => {
@@ -175,11 +190,7 @@ const NgoOpportunities = () => {
                                 {opp.status === 'Open' && (
                                     <button
                                         className="close-opp-btn"
-                                        onClick={() => {
-                                            if (window.confirm('Are you sure you want to close this opportunity?')) {
-                                                setOpportunities(opportunities.map(o => o.id === opp.id ? { ...o, status: 'Closed' } : o));
-                                            }
-                                        }}
+                                        onClick={() => handleCloseOpportunity(opp.id)}
                                         style={{
                                             padding: '0.5rem 1rem',
                                             borderRadius: '0.5rem',

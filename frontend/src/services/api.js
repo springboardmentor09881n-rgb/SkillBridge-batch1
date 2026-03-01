@@ -194,6 +194,45 @@ export const createOpportunity = async (oppData) => {
     }
 };
 
+export const updateOpportunity = async (opportunityId, oppData) => {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(`${API_URL}/ngo/opportunities/${opportunityId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(oppData)
+        });
+        return await handleResponse(response);
+    } catch {
+        return {
+            success: false,
+            message: 'Network error while updating opportunity.',
+        };
+    }
+};
+
+export const deleteOpportunity = async (opportunityId) => {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(`${API_URL}/ngo/opportunities/${opportunityId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return await handleResponse(response);
+    } catch {
+        return {
+            success: false,
+            message: 'Network error while deleting opportunity.',
+        };
+    }
+};
+
 // ================= NGO APPLICATIONS =================
 export const getNgoApplications = async () => {
     const token = localStorage.getItem('token');

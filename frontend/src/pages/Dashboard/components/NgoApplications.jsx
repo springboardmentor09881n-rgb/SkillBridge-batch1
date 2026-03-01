@@ -7,21 +7,6 @@ const NgoApplications = ({ onActivityRecord }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('All');
 
-    // Mock data kept as reference in comments
-    /*
-    const mockApplications = [
-        {
-            id: 1,
-            opportunityTitle: "Website Redesign for Local Shelter",
-            volunteerName: "John Doe",
-            appliedDate: "May 8, 2025",
-            message: "I have 5 years of experience in web development and design. I've worked with several nonprofits before and would love to help improve your online presence.",
-            tags: ["Web Development", "UI/UX Design"],
-            status: "Pending"
-        }
-    ];
-    */
-
     const [applications, setApplications] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 

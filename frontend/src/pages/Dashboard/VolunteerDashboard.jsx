@@ -17,7 +17,7 @@ const VolunteerDashboard = () => {
     const [appliedOpps, setAppliedOpps] = useState([]);
     const [applications, setApplications] = useState([]);
 
-    // State structured for backend integration
+    // State for backend data
     const [volunteerData, setVolunteerData] = useState({
         profile: {
             name: user?.full_name || user?.fullName || user?.username || '',
@@ -26,35 +26,6 @@ const VolunteerDashboard = () => {
             skills: user?.skills || [],
             recentActivity: []
         },
-        // Mock data kept as reference in comments
-        /*
-        opportunities: [
-            {
-                id: 1,
-                title: 'Website Redesign for Local Shelter',
-                ngoId: 2,
-                description: 'Help us redesign our website to improve our online presence and reach more potential adopters.',
-                tags: ['Web Development', 'UI/UX Design'],
-                status: 'Open'
-            },
-            {
-                id: 2,
-                title: 'Translation of Educational Materials',
-                ngoId: 2,
-                description: 'Translate educational materials from English to Spanish, French, or Arabic to support our global literacy programs.',
-                tags: ['Translation', 'Language Skills'],
-                status: 'Open'
-            },
-            {
-                id: 3,
-                title: 'Fundraising Gala Event Coordinator',
-                ngoId: 2,
-                description: 'Help plan and coordinate our annual fundraising gala to support children’s medical research.',
-                tags: ['Event Planning', 'Marketing'],
-                status: 'Open'
-            }
-        ]
-        */
         opportunities: []
     });
 
