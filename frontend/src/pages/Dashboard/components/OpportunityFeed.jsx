@@ -199,8 +199,8 @@ const OpportunityFeed = ({ opportunities = [], appliedOpps = [], onApply = () =>
                             <div>
                                 <h3 className="vol-opp-title">{opp.title}</h3>
                                 <div className="flex flex-col">
-                                    <span className="vol-opp-ngo font-bold text-blue-600">{opp.ngoName || 'NGO Partner'}</span>
-                                    <span className="text-xs text-slate-400">Posted {opp.createdAt ? new Date(opp.createdAt).toLocaleDateString() : 'recently'}</span>
+                                    <span className="vol-opp-ngo font-bold text-blue-600 dark:text-blue-400">{opp.ngoName || 'NGO Partner'}</span>
+                                    <span className="text-xs text-[var(--text-muted)]">Posted {opp.createdAt ? new Date(opp.createdAt).toLocaleDateString() : 'recently'}</span>
                                 </div>
                             </div>
                             <span className="vol-opp-status">{opp.status || 'open'}</span>
@@ -209,7 +209,7 @@ const OpportunityFeed = ({ opportunities = [], appliedOpps = [], onApply = () =>
                         <p className="vol-opp-desc">{opp.description}</p>
 
                         <div className="vol-opp-tags">
-                            {(Array.isArray(opp.requiredSkills) ? opp.requiredSkills : JSON.parse(opp.requiredSkills || '[]')).map((tag, i) => (
+                            {([...new Set(Array.isArray(opp.requiredSkills) ? opp.requiredSkills : JSON.parse(opp.requiredSkills || '[]'))]).map((tag, i) => (
                                 <span key={i} className="vol-opp-tag">{tag}</span>
                             ))}
                         </div>

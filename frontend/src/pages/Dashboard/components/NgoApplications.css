@@ -294,3 +294,83 @@
 .btn-message:hover {
     background-color: #f8fafc;
 }
+
+/* ─── Dark Mode Overrides (Matched to OpportunityFeed) ─── */
+.dark .apps-header h1 {
+    color: #f8fafc;
+}
+.dark .apps-header p {
+    color: #94a3b8;
+}
+.dark .apps-controls-card,
+.dark .application-card {
+    background-color: #1e293b;
+    border-color: #334155;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+.dark .search-box input,
+.dark .filter-dropdown select,
+.dark .status-tabs-container,
+.dark .message-bubble {
+    background-color: #0f172a;
+    border-color: #334155;
+    color: #f8fafc;
+}
+.dark .search-icon,
+.dark .dropdown-icon {
+    color: #64748b;
+}
+.dark .search-box input:focus,
+.dark .filter-dropdown select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+.dark .reset-btn,
+.dark .btn-accept,
+.dark .btn-reject,
+.dark .btn-revert,
+.dark .btn-message {
+    background-color: #334155;
+    border-color: #475569;
+    color: #f8fafc;
+}
+.dark .reset-btn:hover,
+.dark .btn-accept:hover,
+.dark .btn-reject:hover,
+.dark .btn-message:hover {
+    background-color: #475569;
+}
+.dark .btn-revert {
+    color: #cbd5e1;
+}
+.dark .status-tab {
+    color: #94a3b8;
+}
+.dark .status-tab.active {
+    background-color: #1e293b;
+    color: #f8fafc;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+.dark .title-section h3 {
+    color: #f8fafc;
+}
+.dark .applicant-info,
+.dark .message-bubble p {
+    color: #cbd5e1;
+}
+.dark .app-tag {
+    background-color: rgba(37, 99, 235, 0.2);
+    color: #93c5fd;
+}
+.dark .status-badge.pending {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: #fcd34d;
+}
+.dark .status-badge.accepted {
+    background-color: rgba(34, 197, 94, 0.15);
+    color: #86efac;
+}
+.dark .status-badge.rejected {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+}

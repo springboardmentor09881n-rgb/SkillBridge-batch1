@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/common/Button';
+import StatCard from './StatCard';
+import { FileCheck, CheckCircle, Hourglass, Award } from 'lucide-react';
 
 const VolunteerOverview = ({ profile, applicationsCount = 0, acceptedCount = 0, pendingCount = 0, skillsCount = 0 }) => {
     const navigate = useNavigate();
@@ -26,27 +28,33 @@ const VolunteerOverview = ({ profile, applicationsCount = 0, acceptedCount = 0, 
             </div>
 
             {/* Your Impact Section */}
-            <div className="overview-section">
-                <div className="overview-header">
-                    <h3>Your Impact</h3>
-                </div>
-                <div className="impact-grid">
-                    <div className="impact-card bg-slate">
-                        <span className="impact-number text-slate">{applicationsCount}</span>
-                        <span className="impact-label text-slate-muted">Applications</span>
-                    </div>
-                    <div className="impact-card bg-emerald">
-                        <span className="impact-number text-emerald">{acceptedCount}</span>
-                        <span className="impact-label text-emerald-muted">Accepted</span>
-                    </div>
-                    <div className="impact-card bg-amber">
-                        <span className="impact-number text-amber">{pendingCount}</span>
-                        <span className="impact-label text-amber-muted">Pending</span>
-                    </div>
-                    <div className="impact-card bg-indigo">
-                        <span className="impact-number text-indigo">{skillsCount}</span>
-                        <span className="impact-label text-indigo-muted">Skills</span>
-                    </div>
+            <div style={{ marginBottom: '0.5rem' }}>
+                <h2 style={{ color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.1rem', marginBottom: '1rem', paddingLeft: '0.25rem' }}>Your Impact</h2>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+                    <StatCard 
+                        title="Applications" 
+                        value={applicationsCount} 
+                        icon={FileCheck} 
+                        variant="blue" 
+                    />
+                    <StatCard 
+                        title="Accepted" 
+                        value={acceptedCount} 
+                        icon={CheckCircle} 
+                        variant="green" 
+                    />
+                    <StatCard 
+                        title="Pending" 
+                        value={pendingCount} 
+                        icon={Hourglass} 
+                        variant="amber" 
+                    />
+                    <StatCard 
+                        title="Skills" 
+                        value={skillsCount} 
+                        icon={Award} 
+                        variant="indigo" 
+                    />
                 </div>
             </div>
 

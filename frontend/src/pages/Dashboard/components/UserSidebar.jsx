@@ -14,11 +14,12 @@ const parseSkills = (raw) => {
     return [];
 };
 
-const UserSidebar = ({ profile }) => {
+const UserSidebar = ({ profile, recentActivity = [] }) => {
     const { user: authUser, updateUser } = useAuth();
     const [isAddingSkill, setIsAddingSkill] = useState(false);
     const [newSkill, setNewSkill] = useState('');
     const [isSaving, setIsSaving] = useState(false);
+    const [showAllActivity, setShowAllActivity] = useState(false);
 
     // Initialize from profile prop (which comes from auth context), parsed safely
     const [localSkills, setLocalSkills] = useState(() => parseSkills(profile.skills));
@@ -84,19 +85,19 @@ const UserSidebar = ({ profile }) => {
 
     return (
         <aside className="user-sidebar w-80">
-            <div className="profile-card bg-white border border-slate-200 rounded-lg overflow-hidden">
-                <div className="profile-header flex items-center gap-5 p-6 border-b border-slate-100">
+            <div className="profile-card rounded-xl overflow-hidden shadow-md" style={{ height: 'fit-content', backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}>
+                <div className="profile-header flex items-center gap-5 p-6" style={{ borderBottom: '1px solid var(--border-color)' }}>
                     <div className="avatar-circle w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-xl font-bold text-white shrink-0 shadow-sm">
                         {profile.initials}
                     </div>
                     <div className="profile-info overflow-hidden min-w-0 flex-1">
-                        <h3 className="m-0 text-lg font-semibold text-slate-900 truncate" title={profile.name}>{profile.name}</h3>
-                        <p className="profile-role-subtext text-sm text-slate-500 mt-1 capitalize truncate" title={profile.iam}>{profile.iam}</p>
+                        <h3 className="m-0 text-lg font-semibold truncate" style={{ color: 'var(--text-primary)' }} title={profile.name}>{profile.name}</h3>
+                        <p className="profile-role-subtext text-sm mt-1 capitalize truncate" style={{ color: 'var(--text-secondary)' }} title={profile.iam}>{profile.iam}</p>
                     </div>
                 </div>
 
-                <div className="sidebar-section p-6 border-b border-slate-100">
-                    <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Your Skills</h4>
+                <div className="sidebar-section p-6" style={{ borderBottom: '1px solid var(--border-color)' }}>
+                    <h4 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: 'var(--text-muted)' }}>Your Skills</h4>
 
                     <div className="skills-list flex items-center gap-2 flex-wrap mb-3">
                         {localSkills.length > 0 ? (
@@ -104,7 +105,7 @@ const UserSidebar = ({ profile }) => {
                                 <span key={i} className="skill-tag">{skill}</span>
                             ))
                         ) : (
-                            <p className="empty-text text-sm text-slate-500 m-0">No skills added yet</p>
+                            <p className="empty-text text-sm text-[var(--text-muted)] m-0">No skills added yet</p>
                         )}
                     </div>
 
@@ -141,18 +142,18 @@ const UserSidebar = ({ profile }) => {
                     )}
                     <button
                         onClick={() => setIsAddingSkill(true)}
-                        className="mt-1 flex items-center gap-1 text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-full transition-colors"
+                        className="add-skills-btn mt-1 flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-full transition-colors"
                     >
                         <Plus size={14} /> Add Skills
                     </button>
                 </div>
 
                 <div className="sidebar-section p-6">
-                    <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Activity</h4>
+                    <h4 className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>Activity</h4>
 
-                    {authUser?.recentActivity && authUser.recentActivity.length > 0 ? (
-                        <div className="sidebar-activity-list">
-                            {authUser.recentActivity.map((activity) => (
+                    {recentActivity && recentActivity.length > 0 ? (
+                        <div className="sidebar-activity-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            {recentActivity.slice(0, showAllActivity ? recentActivity.length : 3).map((activity) => (
                                 <div key={activity.id} className="sidebar-activity-item">
                                     <div className="sidebar-activity-dot"></div>
                                     <div className="sidebar-activity-content">
@@ -161,9 +162,18 @@ const UserSidebar = ({ profile }) => {
                                     </div>
                                 </div>
                             ))}
+
+                            {recentActivity.length > 3 && (
+                                <button 
+                                    onClick={() => setShowAllActivity(p => !p)}
+                                    className="view-more-btn"
+                                >
+                                    {showAllActivity ? 'Show Less' : `View More (${recentActivity.length - 3} more)`}
+                                </button>
+                            )}
                         </div>
                     ) : (
-                        <p className="empty-text text-sm text-slate-500 m-0 mt-2">No recent activity</p>
+                        <p className="empty-text text-sm text-[var(--text-muted)] m-0 mt-2">No recent activity</p>
                     )}
                 </div>
             </div>

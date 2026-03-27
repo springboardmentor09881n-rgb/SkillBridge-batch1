@@ -1,0 +1,115 @@
+.recent-apps-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem 0;
+}
+
+.recent-app-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.875rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: background 0.15s;
+    cursor: default;
+}
+
+.recent-app-item:hover {
+    background: var(--bg-main);
+}
+
+.app-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
+    color: white;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.app-volunteer-name {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.app-opportunity-title {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.app-opportunity-title span {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.status-badge-container {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.app-time {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+/* ─── Status Badge Themes ─── */
+.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+.status-pending .status-dot { background: #f59e0b; }
+
+.status-accepted {
+    background: #d1fae5;
+    color: #065f46;
+}
+.status-accepted .status-dot { background: #10b981; }
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+.status-rejected .status-dot { background: #ef4444; }
+
+/* ─── Dark Mode Overrides ─── */
+.dark .status-pending { background: rgba(245, 158, 11, 0.15); color: #fcd34d; }
+.dark .status-accepted { background: rgba(16, 185, 129, 0.15); color: #86efac; }
+.dark .status-rejected { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }

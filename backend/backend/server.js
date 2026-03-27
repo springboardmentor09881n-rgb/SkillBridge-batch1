@@ -6,7 +6,6 @@ const cors = require('cors')
 const authRoutes = require('./src/routes/auth.routes')
 const ngoRoutes = require('./src/routes/ngo.routes')
 const volunteerRoutes = require('./src/routes/volunteer.routes')
-const messageRoutes = require('./src/routes/message.routes')
 const notificationRoutes = require('./src/routes/notification.routes')
 
 // Public opportunities route (for browsing without auth)
@@ -23,7 +22,6 @@ app.get('/', (req, res) => res.send('SkillBridge API Running ✅'))
 app.use('/api/auth', authRoutes)
 app.use('/api/ngo', ngoRoutes)
 app.use('/api/volunteer', volunteerRoutes)
-app.use('/api/messages', messageRoutes)
 app.use('/api/notifications', notificationRoutes)
 app.use('/api/opportunities', opportunityRoutes) // Public: GET all, GET by id
 

@@ -3,3 +3,5 @@ node_modules/
 .vite/
 dist/
 .dist/
+./frontend/node_modules/
+./backend/backend/node_modules/

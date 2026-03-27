@@ -11,6 +11,7 @@ import CreateOpportunity from './components/CreateOpportunity';
 import OpportunityDetails from './components/OpportunityDetails';
 import NgoApplications from './components/NgoApplications';
 import MessagesPage from './components/MessagesPage';
+import MatchSuggestionsPopup from '../../components/MatchSuggestionsPopup';
 import { getNgoDashboardData, getProfile } from '../../services/api';
 import './NgoDashboard.css';
 
@@ -88,7 +89,11 @@ const NgoDashboard = () => {
                             <Sidebar
                                 organization={organization}
                                 activeTab={activeTab}
-                                recentActivity={[]}
+                                recentActivity={(recentApplications || []).map(app => ({
+                                    id: app.id,
+                                    text: `${app.volunteerName || 'Volunteer'} applied to ${app.opportunityTitle || 'Opportunity'}`,
+                                    date: app.appliedAt ? new Date(app.appliedAt).toLocaleDateString() : 'Just now'
+                                }))}
                             />
                             <main className="dashboard-content w-full flex-1 min-w-0">
                                 {activeTab === 'dashboard' && (
@@ -121,6 +126,7 @@ const NgoDashboard = () => {
                     </div>
                 )}
             </div>
+            <MatchSuggestionsPopup />
         </div>
     );
 };

@@ -434,3 +434,138 @@
     cursor: not-allowed;
     transform: none;
 }
+
+/* ─── Dark Mode Overrides ─── */
+.dark .opp-detail-back-btn {
+    color: #94a3b8;
+}
+.dark .opp-detail-back-btn:hover {
+    color: #f8fafc;
+}
+
+/* Card should be elevated slate-800 exactly like vol-opp-card */
+.dark .opp-detail-card {
+    background-color: #1e293b;
+    border-color: #334155;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+.dark .opp-detail-header {
+    border-color: #334155;
+}
+
+.dark .opp-detail-title {
+    color: #f8fafc;
+}
+
+.dark .opp-detail-org {
+    color: #94a3b8;
+}
+
+.dark .detail-tag {
+    background-color: rgba(37, 99, 235, 0.2);
+    color: #93c5fd;
+}
+
+.dark .opp-detail-meta {
+    background-color: rgba(15, 23, 42, 0.4);
+    border-color: #334155;
+}
+
+.dark .meta-item {
+    color: #94a3b8;
+}
+
+.dark .meta-item strong {
+    color: #cbd5e1;
+}
+
+.dark .content-section-title {
+    color: #f8fafc;
+}
+
+.dark .content-text {
+    color: #cbd5e1;
+}
+
+.dark .opp-detail-footer {
+    background-color: rgba(15, 23, 42, 0.4);
+    border-color: #334155;
+}
+
+.dark .btn-edit-opp {
+    background-color: #334155;
+    border-color: #475569;
+    color: #f8fafc;
+}
+
+.dark .btn-edit-opp:hover {
+    background-color: #475569;
+}
+
+.dark .btn-close-opp {
+    background-color: rgba(220, 38, 38, 0.15);
+    color: #fca5a5;
+    border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+.dark .btn-close-opp:hover {
+    background-color: rgba(220, 38, 38, 0.25);
+}
+
+/* Inline Edit Form Dark Mode */
+.dark .edit-form-header {
+    background: #1e293b;
+    border-color: #334155;
+}
+.dark .edit-form-title {
+    color: #f8fafc;
+}
+.dark .edit-form-close-btn {
+    background: #334155;
+    border-color: #475569;
+    color: #94a3b8;
+}
+.dark .edit-form-close-btn:hover {
+    background: #475569;
+    color: #f8fafc;
+}
+.dark .edit-field label {
+    color: #94a3b8;
+}
+.dark .edit-field input,
+.dark .edit-field textarea,
+.dark .edit-field select {
+    background: #0f172a;
+    border-color: #334155;
+    color: #f8fafc;
+}
+.dark .edit-form-actions {
+    background: #1e293b;
+    border-color: #334155;
+}
+.dark .edit-cancel-btn {
+    background: #334155;
+    border-color: #475569;
+    color: #cbd5e1;
+}
+.dark .edit-cancel-btn:hover {
+    background: #475569;
+    color: #f8fafc;
+}
+.dark .close-confirm-banner {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+.dark .close-confirm-text {
+    color: #fcd34d;
+}
+.dark .close-confirm-cancel {
+    background: #334155;
+    border-color: #475569;
+    color: #cbd5e1;
+}
+.dark .close-confirm-cancel:hover {
+    background: #475569;
+    color: #f8fafc;
+}

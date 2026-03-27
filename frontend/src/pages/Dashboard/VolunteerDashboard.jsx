@@ -6,6 +6,7 @@ import OpportunityFeed from './components/OpportunityFeed';
 import VolunteerOverview from './components/VolunteerOverview';
 import OpportunityDetails from './components/OpportunityDetails';
 import MessagesPage from './components/MessagesPage';
+import MatchSuggestionsPopup from '../../components/MatchSuggestionsPopup';
 import './VolunteerDashboard.css';
 import { useAuth } from '../../context/AuthContext';
 import {
@@ -117,7 +118,14 @@ const VolunteerDashboard = () => {
                 ) : (
                     <div className="v-dashboard-main !max-w-none !m-0 !p-0">
                         <div className="dashboard-grid">
-                            <UserSidebar profile={profile} />
+                            <UserSidebar 
+                                profile={profile} 
+                                recentActivity={(dashData.applications || []).map(app => ({
+                                    id: app.id,
+                                    text: `Applied to ${app.opportunityTitle || 'Opportunity'}`,
+                                    date: app.appliedAt ? new Date(app.appliedAt).toLocaleDateString() : 'Just now'
+                                }))}
+                            />
                             <div className="dashboard-content">
                                 {activeTab === 'dashboard' && (
                                     <VolunteerOverview
@@ -145,6 +153,7 @@ const VolunteerDashboard = () => {
                     </div>
                 )}
             </div>
+            <MatchSuggestionsPopup />
         </div>
     );
 };

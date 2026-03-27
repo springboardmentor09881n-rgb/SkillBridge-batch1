@@ -1,111 +1,94 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Send, MessageSquare, User, Search, ArrowLeft } from 'lucide-react';
-import { getMessages, sendMessage, getConversation } from '../../../services/api';
+import { Send, MessageSquare, User, Search } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 import './MessagesPage.css';
 
-const timeStr = (dateStr) => {
-    if (!dateStr) return '';
-    const d = new Date(dateStr);
-    return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+const timeStr = (dateDate) => {
+    if (!dateDate) return '';
+    return dateDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
+
+// --- MOCK DATA FOR DEMO PURPOSES ---
+const MOCK_MESSAGES = [];
+
+const MOCK_CONVERSATIONS = [];
+// -----------------------------------
 
 const MessagesPage = ({ initialReceiverId, initialOpportunityId }) => {
     const { user } = useAuth();
-    const [conversations, setConversations] = useState([]);
-    const [selected, setSelected] = useState(null); // { otherId, opportunityId, otherName }
+    
+    // Default to mock ID 2 if user not logged in for demo
+    const currentUserId = user?.id || 2; 
+
+    const [conversations, setConversations] = useState(MOCK_CONVERSATIONS);
+    const [selected, setSelected] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMsg, setNewMsg] = useState('');
-    const [isSending, setIsSending] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
     const bottomRef = useRef(null);
 
-    // Build conversation list from flat messages list
-    const buildConversations = useCallback((msgs) => {
-        const map = {};
-        msgs.forEach(m => {
-            const otherId = m.senderId === user?.id ? m.receiverId : m.senderId;
-            const otherName = m.senderId === user?.id ? (m.receiverName || `User ${m.receiverId}`) : m.senderName;
-            const key = `${otherId}_${m.opportunityId || 'general'}`;
-            if (!map[key] || new Date(m.createdAt) > new Date(map[key].lastMessage.createdAt)) {
-                map[key] = {
-                    otherId,
-                    otherName,
-                    opportunityId: m.opportunityId,
-                    lastMessage: m,
-                    unread: 0,
-                };
-            }
-        });
-        return Object.values(map).sort((a, b) =>
-            new Date(b.lastMessage.createdAt) - new Date(a.lastMessage.createdAt)
-        );
-    }, [user]);
-
     useEffect(() => {
-        const load = async () => {
-            setIsLoading(true);
-            const result = await getMessages();
-            if (result.success) {
-                const convos = buildConversations(result.data || []);
-                setConversations(convos);
-
-                // If initialReceiverId is provided, auto-open that conversation
-                if (initialReceiverId) {
-                    const match = convos.find(c => c.otherId === parseInt(initialReceiverId));
-                    if (match) {
-                        selectConversation(match);
-                    } else {
-                        // New conversation not in list yet
-                        setSelected({
-                            otherId: parseInt(initialReceiverId),
-                            opportunityId: initialOpportunityId || null,
-                            otherName: `User #${initialReceiverId}`
-                        });
-                    }
-                }
+        // If initialReceiverId is provided, auto-open that conversation
+        if (initialReceiverId) {
+            const match = conversations.find(c => c.otherId === parseInt(initialReceiverId));
+            if (match) {
+                selectConversation(match);
+            } else {
+                setSelected({
+                    otherId: parseInt(initialReceiverId),
+                    opportunityId: initialOpportunityId || null,
+                    otherName: `User #${initialReceiverId}`
+                });
+                setMessages([]);
             }
-            setIsLoading(false);
-        };
-        load();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const selectConversation = async (convo) => {
+    const selectConversation = (convo) => {
         setSelected(convo);
-        if (convo.opportunityId) {
-            const result = await getConversation(convo.otherId, convo.opportunityId);
-            if (result.success) setMessages(result.data || []);
-        } else {
-            // Filter from full messages list
-            const result = await getMessages();
-            if (result.success) {
-                const filtered = (result.data || []).filter(m =>
-                    (m.senderId === user?.id && m.receiverId === convo.otherId) ||
-                    (m.receiverId === user?.id && m.senderId === convo.otherId)
-                );
-                setMessages(filtered.reverse());
-            }
-        }
+        
+        // Load mock messages for this conversation
+        const filtered = MOCK_MESSAGES.filter(m =>
+            (m.senderId === currentUserId && m.receiverId === convo.otherId) ||
+            (m.receiverId === currentUserId && m.senderId === convo.otherId)
+        );
+        setMessages(filtered);
     };
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 
-    const handleSend = async () => {
-        if (!newMsg.trim() || !selected || isSending) return;
-        setIsSending(true);
-        const result = await sendMessage(selected.otherId, selected.opportunityId, newMsg.trim());
-        if (result.success) {
-            setMessages(prev => [...prev, result.data]);
-            setNewMsg('');
-            // Refresh conversations sidebar
-            const msgs = await getMessages();
-            if (msgs.success) setConversations(buildConversations(msgs.data || []));
-        }
-        setIsSending(false);
+    const handleSend = () => {
+        if (!newMsg.trim() || !selected) return;
+        
+        const newMockMsg = {
+            id: Date.now(),
+            senderId: currentUserId,
+            receiverId: selected.otherId,
+            senderName: user?.fullName || 'You',
+            receiverName: selected.otherName,
+            content: newMsg.trim(),
+            createdAt: new Date(),
+            opportunityId: selected.opportunityId
+        };
+        
+        setMessages(prev => [...prev, newMockMsg]);
+        setNewMsg('');
+
+        // Update last message in conversations sidebar
+        setConversations(prev => {
+            const updated = prev.map(c => {
+                if (c.otherId === selected.otherId) {
+                    return { ...c, lastMessage: newMockMsg };
+                }
+                return c;
+            });
+            // Bring to top
+            updated.sort((a, b) => b.lastMessage.createdAt.getTime() - a.lastMessage.createdAt.getTime());
+            return updated;
+        });
     };
 
     const filtered = conversations.filter(c =>
@@ -129,9 +112,7 @@ const MessagesPage = ({ initialReceiverId, initialOpportunityId }) => {
                 </div>
 
                 <div className="msg-convo-list">
-                    {isLoading ? (
-                        <div className="msg-empty">Loading...</div>
-                    ) : filtered.length === 0 ? (
+                    {filtered.length === 0 ? (
                         <div className="msg-empty">
                             <MessageSquare size={32} />
                             <p>No conversations yet</p>
@@ -156,6 +137,9 @@ const MessagesPage = ({ initialReceiverId, initialOpportunityId }) => {
                                 <div className="msg-convo-time">
                                     {timeStr(c.lastMessage?.createdAt)}
                                 </div>
+                                {c.unread > 0 && selected?.otherId !== c.otherId && (
+                                    <div className="msg-unread-badge"></div>
+                                )}
                             </div>
                         ))
                     )}
@@ -191,7 +175,7 @@ const MessagesPage = ({ initialReceiverId, initialOpportunityId }) => {
                                 <div className="msg-no-msgs">No messages yet. Say hello! 👋</div>
                             ) : (
                                 messages.map((m, i) => {
-                                    const isMine = m.senderId === user?.id;
+                                    const isMine = m.senderId === currentUserId;
                                     return (
                                         <div key={m.id || i} className={`msg-bubble-wrap ${isMine ? 'mine' : 'theirs'}`}>
                                             <div className={`msg-bubble ${isMine ? 'mine' : 'theirs'}`}>
@@ -217,7 +201,7 @@ const MessagesPage = ({ initialReceiverId, initialOpportunityId }) => {
                             <button
                                 className="msg-send-btn"
                                 onClick={handleSend}
-                                disabled={isSending || !newMsg.trim()}
+                                disabled={!newMsg.trim()}
                             >
                                 <Send size={18} />
                             </button>

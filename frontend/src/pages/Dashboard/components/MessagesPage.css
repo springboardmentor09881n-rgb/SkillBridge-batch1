@@ -316,3 +316,107 @@
     opacity: 0.45;
     cursor: not-allowed;
 }
+
+/* ─── Dark Mode Overrides (Matched to OpportunityFeed) ─── */
+.dark .messages-page {
+    background: #0f172a;
+    border-color: #334155;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+.dark .msg-sidebar {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.dark .msg-sidebar-header {
+    border-color: #334155;
+}
+
+.dark .msg-sidebar-header h2 {
+    color: #f8fafc;
+}
+
+.dark .msg-search {
+    background: #0f172a;
+    border-color: #334155;
+}
+
+.dark .msg-search input {
+    color: #f8fafc;
+}
+
+.dark .msg-search .lucide {
+    color: #64748b;
+}
+
+.dark .msg-empty p {
+    color: #cbd5e1;
+}
+
+.dark .msg-empty span {
+    color: #94a3b8;
+}
+
+.dark .msg-convo-item {
+    border-color: #334155;
+}
+
+.dark .msg-convo-item:hover {
+    background: #0f172a;
+}
+
+.dark .msg-convo-name {
+    color: #f8fafc;
+}
+
+.dark .msg-convo-preview,
+.dark .msg-convo-time {
+    color: #94a3b8;
+}
+
+.dark .msg-no-chat h3 {
+    color: #f8fafc;
+}
+
+.dark .msg-no-chat p {
+    color: #94a3b8;
+}
+
+.dark .msg-chat-header {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.dark .msg-chat-name {
+    color: #f8fafc;
+}
+
+.dark .msg-chat-sub {
+    color: #94a3b8;
+}
+
+.dark .msg-bubble.theirs {
+    background: #0f172a;
+    border-color: #334155;
+    color: #f8fafc;
+}
+
+.dark .msg-time {
+    color: #94a3b8;
+}
+
+.dark .msg-input-row {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.dark .msg-input {
+    background: #0f172a;
+    border-color: #334155;
+    color: #f8fafc;
+}
+
+.dark .msg-input:focus {
+    border-color: #3b82f6;
+}

@@ -71,6 +71,7 @@ const getNgoApplications = async (ngoId) => {
     const result = await pool.query(
         `SELECT 
             a.id,
+            a."opportunityId",
             a.status,
             a.message,
             a."createdAt" as "appliedAt",

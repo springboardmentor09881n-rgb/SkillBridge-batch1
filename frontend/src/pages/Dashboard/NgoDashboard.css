@@ -22,7 +22,7 @@
 
 .sidebar-header {
     padding: var(--spacing-8);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .org-profile-mini {
@@ -34,7 +34,7 @@
     display: block;
     font-size: var(--font-size-base);
     font-weight: 800;
-    color: var(--text-main);
+    color: var(--text-primary);
 }
 
 .org-role {
@@ -295,7 +295,7 @@ h2.section-title {
 .metric-card {
     padding: var(--spacing-6);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-color);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
@@ -373,8 +373,9 @@ h2.section-title {
 /* Main Dashboard Grid */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: 320px 1fr;
     gap: var(--spacing-8);
+    margin-top: 2rem;
 }
 
 /* Applications Table/List */
@@ -411,8 +412,8 @@ h2.section-title {
 
 .app-item {
     padding: var(--spacing-6);
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     transition: all 0.2s;
 }
@@ -465,10 +466,10 @@ h2.section-title {
 
 /* Quick Actions Section */
 .quick-actions {
-    background: var(--surface);
+    background: var(--bg-surface);
     padding: var(--spacing-8);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-color);
 }
 
 .quick-actions-container {
@@ -487,7 +488,7 @@ h2.section-title {
     gap: var(--spacing-6);
     padding: var(--spacing-8);
     background: var(--surface-secondary);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1321,4 +1322,67 @@ h2.section-title {
 .status-closed {
     background: #fee2e2;
     color: #dc2626;
+}/* --- Final Refinements --- */
+.dark .btn-outline {
+    background-color: transparent !important;
+    color: #cbd5e1 !important;
+    border-color: #334155 !important;
 }
+
+.dark .btn-outline:hover {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+    border-color: #475569 !important;
+}
+
+.dark .ngo-filter-group {
+    background: #0f172a !important;
+}
+
+.dark .filter-btn {
+    color: #94a3b8 !important;
+}
+
+.dark .filter-btn:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #f8fafc !important;
+}
+
+.dark .filter-btn.active {
+    background: #1e293b !important;
+    color: #60a5fa !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark .create-opp-card {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+.dark .create-opp-header h2 {
+    color: #f8fafc !important;
+}
+
+.dark .form-group label {
+    color: #cbd5e1 !important;
+}
+
+.dark .form-input,
+.dark .form-textarea,
+.dark .form-select {
+    background-color: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f8fafc !important;
+}
+
+.dark .form-input:focus,
+.dark .form-textarea:focus,
+.dark .form-select:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+}
+
+.dark .create-opp-actions {
+    border-top-color: #334155 !important;
+}
+

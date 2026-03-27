@@ -20,7 +20,9 @@ const CreateOpportunity = () => {
         if (skillInput.trim()) {
             setFormData(prev => ({
                 ...prev,
-                requiredSkills: [...prev.requiredSkills, skillInput.trim()]
+                requiredSkills: prev.requiredSkills.includes(skillInput.trim()) 
+                    ? prev.requiredSkills 
+                    : [...prev.requiredSkills, skillInput.trim()]
             }));
             setSkillInput('');
         }
@@ -94,7 +96,7 @@ const CreateOpportunity = () => {
                         </div>
                         <div className="flex gap-2 mt-2">
                             {formData.requiredSkills.map((skill, i) => (
-                                <span key={i} className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold">
+                                <span key={i} className="ngo-opp-tag">
                                     {skill}
                                 </span>
                             ))}
