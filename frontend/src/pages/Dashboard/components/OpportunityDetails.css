@@ -569,3 +569,26 @@
     background: #475569;
     color: #f8fafc;
 }
+/* ─── ADD THIS TO THE BOTTOM OF OpportunityDetails.css ─── */
+
+/* Message NGO button — shown in volunteer view alongside Apply Now */
+.btn-message-ngo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.25rem;
+    border-radius: 0.625rem;
+    border: 1.5px solid #6366f1;
+    background: transparent;
+    color: #6366f1;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, transform 0.15s;
+}
+
+.btn-message-ngo:hover {
+    background: #6366f1;
+    color: #ffffff;
+    transform: translateY(-1px);
+}

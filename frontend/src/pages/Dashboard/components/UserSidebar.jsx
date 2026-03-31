@@ -52,24 +52,29 @@ const UserSidebar = ({ profile, recentActivity = [] }) => {
 
             try {
                 const response = await updateProfile({ skills: updatedSkillsArray });
+if (response.success) {
 
-                if (response.success) {
-                    // Prepend new activity
-                    const newActivity = {
-                        id: Date.now(),
-                        text: `Added a new skill: ${skillToAdd}`,
-                        date: 'Just now'
-                    };
+    // 🔥 Notify Match Popup to refetch matches
+    window.dispatchEvent(new Event('profileUpdated'));
 
-                    const updatedActivityLog = authUser?.recentActivity
-                        ? [newActivity, ...authUser.recentActivity].slice(0, 5) // Keep last 5
-                        : [newActivity];
+    // Prepend new activity
+    const newActivity = {
+        id: Date.now(),
+        text: `Added a new skill: ${skillToAdd}`,
+        date: 'Just now'
+    };
 
-                    updateUser({
-                        skills: updatedSkillsArray,
-                        recentActivity: updatedActivityLog
-                    });
-                } else {
+    const updatedActivityLog = authUser?.recentActivity
+        ? [newActivity, ...authUser.recentActivity].slice(0, 5)
+        : [newActivity];
+
+    updateUser({
+        skills: updatedSkillsArray,
+        recentActivity: updatedActivityLog
+    });
+}
+
+                else {
                     // Revert on failure
                     console.error("Failed to update profile skills:", response.message);
                     setLocalSkills(localSkills);

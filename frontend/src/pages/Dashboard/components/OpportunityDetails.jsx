@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, MapPin, Clock, Users, Calendar, CheckCircle, X } from 'lucide-react';
+import { ChevronLeft, MapPin, Clock, Users, Calendar, CheckCircle, X, MessageSquare } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { updateOpportunity } from '../../../services/api';
@@ -36,18 +36,18 @@ const OpportunityDetails = ({ appliedOpps = [], onApply = () => { } }) => {
     );
 
     // ── Edit state ───────────────────────────────────────────────
-    const [isEditing, setIsEditing] = useState(false);
-    const [editForm, setEditForm] = useState({});
-    const [isSaving, setIsSaving] = useState(false);
+    const [isEditing, setIsEditing]   = useState(false);
+    const [editForm, setEditForm]     = useState({});
+    const [isSaving, setIsSaving]     = useState(false);
 
     const handleEditClick = () => {
         setEditForm({
-            title: oppData.title,
+            title:       oppData.title,
             description: oppData.description,
-            tagsString: oppData.tags.join(', '),
-            location: oppData.location || '',
-            duration: oppData.duration || '',
-            status: oppData.status || 'open',
+            tagsString:  oppData.tags.join(', '),
+            location:    oppData.location || '',
+            duration:    oppData.duration || '',
+            status:      oppData.status || 'open',
         });
         setIsEditing(true);
     };
@@ -55,12 +55,12 @@ const OpportunityDetails = ({ appliedOpps = [], onApply = () => { } }) => {
     const handleEditSave = async () => {
         setIsSaving(true);
         const payload = {
-            title: editForm.title,
-            description: editForm.description,
+            title:          editForm.title,
+            description:    editForm.description,
             requiredSkills: editForm.tagsString.split(',').map(t => t.trim()).filter(Boolean),
-            location: editForm.location,
-            duration: editForm.duration,
-            status: editForm.status,
+            location:       editForm.location,
+            duration:       editForm.duration,
+            status:         editForm.status,
         };
         const result = await updateOpportunity(oppData.id, payload);
         setIsSaving(false);
@@ -74,7 +74,7 @@ const OpportunityDetails = ({ appliedOpps = [], onApply = () => { } }) => {
 
     // ── Close state ──────────────────────────────────────────────
     const [showCloseConfirm, setShowCloseConfirm] = useState(false);
-    const [isClosing, setIsClosing] = useState(false);
+    const [isClosing, setIsClosing]               = useState(false);
 
     const handleCloseOpp = async () => {
         setIsClosing(true);
@@ -86,6 +86,19 @@ const OpportunityDetails = ({ appliedOpps = [], onApply = () => { } }) => {
         } else {
             alert(result.message || 'Failed to close opportunity.');
         }
+    };
+
+    // ✅ NEW: Message NGO handler for volunteers
+    // Navigates to messages tab passing the NGO's userId + opportunityId
+    // MessagesPage reads this from location.state and auto-opens the chat
+    const handleMessageNgo = () => {
+        navigate('/volunteer/messages', {
+            state: {
+                receiverId:   oppData.ngoId,
+                opportunityId: oppData.id,
+                receiverName:  oppData.ngoName || 'NGO'
+            }
+        });
     };
 
     // ── Not found fallback ───────────────────────────────────────
@@ -103,7 +116,7 @@ const OpportunityDetails = ({ appliedOpps = [], onApply = () => { } }) => {
     }
 
     const hasApplied = appliedOpps.includes(oppData.id);
-    const isOpen = oppData.status === 'open';
+    const isOpen     = oppData.status === 'open';
 
     return (
         <div className="opportunity-details-page">
@@ -270,15 +283,30 @@ const OpportunityDetails = ({ appliedOpps = [], onApply = () => { } }) => {
                                 )}
                             </>
                         ) : (
-                            <button
-                                onClick={() => onApply(oppData.id, oppData.title)}
-                                disabled={hasApplied || !isOpen}
-                                className={`btn-apply-now ${hasApplied ? 'applied' : ''}`}
-                            >
-                                {!isOpen ? 'Opportunity Closed'
-                                    : hasApplied ? <><CheckCircle size={18} /> Applied</>
-                                        : 'Apply Now'}
-                            </button>
+                            // ── VOLUNTEER FOOTER ──────────────────────────────
+                            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                                {/* Apply button — unchanged */}
+                                <button
+                                    onClick={() => onApply(oppData.id, oppData.title)}
+                                    disabled={hasApplied || !isOpen}
+                                    className={`btn-apply-now ${hasApplied ? 'applied' : ''}`}
+                                >
+                                    {!isOpen ? 'Opportunity Closed'
+                                        : hasApplied ? <><CheckCircle size={18} /> Applied</>
+                                            : 'Apply Now'}
+                                </button>
+
+                                {/* ✅ NEW: Message NGO button — only shown when opp is open */}
+                                {isOpen && oppData.ngoId && (
+                                    <button
+                                        onClick={handleMessageNgo}
+                                        className="btn-message-ngo"
+                                    >
+                                        <MessageSquare size={16} />
+                                        Message NGO
+                                    </button>
+                                )}
+                            </div>
                         )}
                     </div>
                 </div>

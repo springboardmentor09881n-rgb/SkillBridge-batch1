@@ -1,39 +1,83 @@
-require('dotenv').config()
-const express = require('express')
-const pool = require('./src/config/db')
-const cors = require('cors')
+require('dotenv').config();
+const express = require('express');
+const http = require('http');
+const cors = require('cors');
 
-const authRoutes = require('./src/routes/auth.routes')
-const ngoRoutes = require('./src/routes/ngo.routes')
-const volunteerRoutes = require('./src/routes/volunteer.routes')
-const notificationRoutes = require('./src/routes/notification.routes')
+const pool = require('./src/config/db');
 
-// Public opportunities route (for browsing without auth)
-const opportunityRoutes = require('./src/routes/opportunity.routes')
+// 🔥 SOCKET.IO
+const { Server } = require('socket.io');
+const socketHandler = require('./src/sockets/socketHandler');
 
-const app = express()
+// ROUTES
+const authRoutes = require('./src/routes/auth.routes');
+const ngoRoutes = require('./src/routes/ngo.routes');
+const volunteerRoutes = require('./src/routes/volunteer.routes');
+const notificationRoutes = require('./src/routes/notification.routes');
+const opportunityRoutes = require('./src/routes/opportunity.routes');
 
-app.use(cors())
-app.use(express.json())
+// ✅ NEW ROUTES (Milestone 4)
+const messageRoutes = require('./src/routes/message.routes');
+const matchRoutes = require('./src/routes/match.routes');
 
-app.get('/', (req, res) => res.send('SkillBridge API Running ✅'))
+const app = express();
+const server = http.createServer(app); // ✅ MOVE HERE
 
-// Route registration
-app.use('/api/auth', authRoutes)
-app.use('/api/ngo', ngoRoutes)
-app.use('/api/volunteer', volunteerRoutes)
-app.use('/api/notifications', notificationRoutes)
-app.use('/api/opportunities', opportunityRoutes) // Public: GET all, GET by id
+// 🔥 SOCKET INIT
+const io = new Server(server, {
+    cors: {
+        origin: '*',
+        methods: ['GET', 'POST']
+    }
+});
 
-const PORT = process.env.PORT || 5000
-app.listen(PORT, () => console.log(`\n🚀 Server running on port ${PORT}`))
+// ✅ VERY IMPORTANT (before routes use it)
+app.set("io", io);
 
+// 🔌 Attach socket handler
+socketHandler(io);
+
+// ===============================
+// MIDDLEWARE
+// ===============================
+app.use(cors());
+app.use(express.json());
+
+// ===============================
+// ROOT
+// ===============================
+app.get('/', (req, res) => res.send('SkillBridge API Running ✅'));
+
+// ===============================
+// 📌 ROUTES
+// ===============================
+app.use('/api/auth', authRoutes);
+app.use('/api/ngo', ngoRoutes);
+app.use('/api/volunteer', volunteerRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/opportunities', opportunityRoutes);
+
+// ✅ Milestone 4
+app.use('/api/messages', messageRoutes);
+app.use('/api/match', matchRoutes);
+
+// ===============================
+// 🚀 START SERVER
+// ===============================
+const PORT = process.env.PORT || 5000;
+
+server.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+});
+
+// ===============================
+// 🧪 DB CONNECTION CHECK
+// ===============================
 pool
-  .query('SELECT NOW()')
-  .then((result) => {
-    console.log('✅ PostgreSQL connected! Time:', result.rows[0].now)
-  })
-  .catch((err) => {
-    console.error('❌ Database connection error:', err.message)
-  })
-
+    .query('SELECT NOW()')
+    .then((result) => {
+        console.log('✅ PostgreSQL connected! Time:', result.rows[0].now);
+    })
+    .catch((err) => {
+        console.error('❌ Database connection error:', err.message);
+    });

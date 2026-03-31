@@ -9,12 +9,22 @@ const pool = new Pool({
     port: process.env.PG_PORT,
 });
 
-const ddl = `
+const schema = `
+
+-- ===============================
+-- DROP TABLES (ORDER MATTERS)
+-- ===============================
+DROP TABLE IF EXISTS notifications;
+DROP TABLE IF EXISTS match_interactions;
 DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS conversations;
 DROP TABLE IF EXISTS applications;
 DROP TABLE IF EXISTS opportunities;
 DROP TABLE IF EXISTS users;
 
+-- ===============================
+-- USERS
+-- ===============================
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(100) NOT NULL UNIQUE,
@@ -28,9 +38,12 @@ CREATE TABLE users (
     "organizationName" VARCHAR(255),
     "organizationDescription" TEXT,
     "websiteUrl" VARCHAR(255),
-    "createdAt" TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- ===============================
+-- OPPORTUNITIES
+-- ===============================
 CREATE TABLE opportunities (
     id SERIAL PRIMARY KEY,
     "ngoId" INTEGER REFERENCES users(id) ON DELETE CASCADE,
@@ -40,34 +53,101 @@ CREATE TABLE opportunities (
     duration VARCHAR(100),
     location VARCHAR(100),
     status VARCHAR(20) DEFAULT 'open' CHECK (status IN ('open', 'closed')),
-    "createdAt" TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- ===============================
+-- APPLICATIONS
+-- ===============================
 CREATE TABLE applications (
     id SERIAL PRIMARY KEY,
     "opportunityId" INTEGER REFERENCES opportunities(id) ON DELETE CASCADE,
     "volunteerId" INTEGER REFERENCES users(id) ON DELETE CASCADE,
     message TEXT DEFAULT '',
     status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'accepted', 'rejected')),
-    "createdAt" TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE messages (
-    id SERIAL PRIMARY KEY,
-    "senderId" INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    "receiverId" INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    content TEXT NOT NULL,
-    "isRead" BOOLEAN DEFAULT FALSE,
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- ===============================
+-- CONVERSATIONS
+-- ===============================
+CREATE TABLE conversations (
+    id SERIAL PRIMARY KEY,
+    user1_id INT NOT NULL,
+    user2_id INT NOT NULL,
+    opportunity_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user1_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (user2_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (opportunity_id) REFERENCES opportunities(id) ON DELETE CASCADE,
+
+    CONSTRAINT unique_conversation UNIQUE (user1_id, user2_id, opportunity_id),
+    CONSTRAINT check_user_order CHECK (user1_id < user2_id)
+);
+
+-- ===============================
+-- MESSAGES
+-- ===============================
+CREATE TABLE messages (
+    id SERIAL PRIMARY KEY,
+    conversation_id INT NOT NULL,
+    sender_id INT NOT NULL,
+    receiver_id INT NOT NULL,
+    content TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (conversation_id) REFERENCES conversations(id) ON DELETE CASCADE,
+    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_messages_conversation_time
+ON messages(conversation_id, created_at);
+
+-- ===============================
+-- MATCH INTERACTIONS
+-- ===============================
+CREATE TABLE match_interactions (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    opportunity_id INT NOT NULL,
+    action VARCHAR(20) NOT NULL CHECK (action IN ('viewed', 'applied', 'ignored')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (opportunity_id) REFERENCES opportunities(id) ON DELETE CASCADE,
+
+    CONSTRAINT unique_user_opportunity UNIQUE (user_id, opportunity_id)
+);
+
+-- ===============================
+-- NOTIFICATIONS
+-- ===============================
+CREATE TABLE notifications (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    reference_id INT,
+    message TEXT,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_notifications_user
+ON notifications(user_id);
+
 `;
 
-pool.query(ddl)
+pool.query(schema)
     .then(() => {
-        console.log("Tables created successfully.");
+        console.log("✅ Database schema created successfully!");
         process.exit(0);
     })
     .catch((err) => {
-        console.error("Error creating tables:", err);
+        console.error("❌ Error creating schema:", err);
         process.exit(1);
     });
