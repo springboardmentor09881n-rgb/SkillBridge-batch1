@@ -1,0 +1,571 @@
+.opportunity-details-page {
+    max-width: 56rem;
+    margin: 0 auto;
+    width: 100%;
+    padding-top: 1rem;
+}
+
+.opp-detail-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+    margin-bottom: 1.5rem;
+}
+
+.opp-detail-back-btn:hover {
+    color: #0f172a;
+}
+
+.opp-detail-card {
+    background: #ffffff;
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.opp-detail-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.opp-detail-title {
+    font-size: 1.875rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+}
+
+.opp-detail-org {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.125rem;
+    color: #475569;
+    margin-bottom: 1rem;
+}
+
+.opp-detail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.detail-tag {
+    background-color: #f1f5f9;
+    color: #334155;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.opp-detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 1.5rem;
+    background-color: #f8fafc;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #475569;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.meta-icon {
+    color: #94a3b8;
+}
+
+.opp-detail-content {
+    padding: 1.5rem 2rem;
+}
+
+.content-section-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.content-text {
+    color: #334155;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.opp-detail-footer {
+    padding: 1.5rem;
+    border-top: 1px solid #f1f5f9;
+    background-color: #f8fafc;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+/* Footer Buttons */
+.btn-edit-opp {
+    padding: 0.625rem 1.5rem;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s;
+}
+
+.btn-edit-opp:hover {
+    background-color: #f8fafc;
+}
+
+.btn-close-opp {
+    padding: 0.625rem 1.5rem;
+    background-color: #fef2f2;
+    color: #dc2626;
+    font-weight: 700;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-close-opp:hover {
+    background-color: #fee2e2;
+}
+
+.btn-apply-now {
+    padding: 0.75rem 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    background-color: #2563eb;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-apply-now:hover:not(:disabled) {
+    background-color: #1d4ed8;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-apply-now:disabled {
+    background-color: #10b981;
+    opacity: 0.9;
+    cursor: not-allowed;
+}
+
+.btn-apply-now.applied,
+.btn-apply-now.applied:disabled {
+    background-color: #22c55e !important;
+    color: white !important;
+    opacity: 1 !important;
+    cursor: default;
+}
+
+/* ── Inline Edit Form ──────────────────────────────────────────── */
+.edit-form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #e2e8f0;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.edit-form-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.edit-form-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1.25rem;
+    background: linear-gradient(180deg, #3b82f6, #6366f1);
+    border-radius: 9999px;
+}
+
+.edit-form-close-btn {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #64748b;
+    transition: all 0.15s ease;
+}
+
+.edit-form-close-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.edit-form-body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.edit-form-row {
+    display: flex;
+    gap: 1.25rem;
+}
+
+.edit-form-row>* {
+    flex: 1;
+}
+
+.edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.edit-field label {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #475569;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.edit-field input,
+.edit-field textarea,
+.edit-field select {
+    padding: 0.65rem 0.875rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.9375rem;
+    color: #0f172a;
+    background: #ffffff;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    font-family: inherit;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.edit-field input:focus,
+.edit-field textarea:focus,
+.edit-field select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.edit-field textarea {
+    resize: vertical;
+    min-height: 110px;
+    line-height: 1.6;
+}
+
+.edit-field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2.5rem;
+}
+
+.edit-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    border-top: 1px solid #f1f5f9;
+    background: #f8fafc;
+}
+
+.edit-cancel-btn {
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    color: #475569;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+}
+
+.edit-cancel-btn:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+.edit-save-btn {
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border: none;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.edit-save-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    transform: translateY(-1px);
+}
+
+.edit-save-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ── Inline Close Confirmation ─────────────────────────────────── */
+.close-confirm-banner {
+    margin: 0 1.5rem 1rem;
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+    border: 1.5px solid #fed7aa;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close-confirm-text {
+    margin: 0;
+    color: #9a3412;
+    font-weight: 600;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.close-confirm-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.close-confirm-cancel {
+    padding: 0.45rem 1rem;
+    border-radius: 7px;
+    border: 1.5px solid #cbd5e1;
+    background: #ffffff;
+    color: #475569;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+}
+
+.close-confirm-cancel:hover {
+    background: #f8fafc;
+}
+
+.close-confirm-yes {
+    padding: 0.45rem 1rem;
+    border-radius: 7px;
+    border: none;
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+    box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
+}
+
+.close-confirm-yes:hover:not(:disabled) {
+    background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+    transform: translateY(-1px);
+}
+
+.close-confirm-yes:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ─── Dark Mode Overrides ─── */
+.dark .opp-detail-back-btn {
+    color: #94a3b8;
+}
+.dark .opp-detail-back-btn:hover {
+    color: #f8fafc;
+}
+
+/* Card should be elevated slate-800 exactly like vol-opp-card */
+.dark .opp-detail-card {
+    background-color: #1e293b;
+    border-color: #334155;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+.dark .opp-detail-header {
+    border-color: #334155;
+}
+
+.dark .opp-detail-title {
+    color: #f8fafc;
+}
+
+.dark .opp-detail-org {
+    color: #94a3b8;
+}
+
+.dark .detail-tag {
+    background-color: rgba(37, 99, 235, 0.2);
+    color: #93c5fd;
+}
+
+.dark .opp-detail-meta {
+    background-color: rgba(15, 23, 42, 0.4);
+    border-color: #334155;
+}
+
+.dark .meta-item {
+    color: #94a3b8;
+}
+
+.dark .meta-item strong {
+    color: #cbd5e1;
+}
+
+.dark .content-section-title {
+    color: #f8fafc;
+}
+
+.dark .content-text {
+    color: #cbd5e1;
+}
+
+.dark .opp-detail-footer {
+    background-color: rgba(15, 23, 42, 0.4);
+    border-color: #334155;
+}
+
+.dark .btn-edit-opp {
+    background-color: #334155;
+    border-color: #475569;
+    color: #f8fafc;
+}
+
+.dark .btn-edit-opp:hover {
+    background-color: #475569;
+}
+
+.dark .btn-close-opp {
+    background-color: rgba(220, 38, 38, 0.15);
+    color: #fca5a5;
+    border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+.dark .btn-close-opp:hover {
+    background-color: rgba(220, 38, 38, 0.25);
+}
+
+/* Inline Edit Form Dark Mode */
+.dark .edit-form-header {
+    background: #1e293b;
+    border-color: #334155;
+}
+.dark .edit-form-title {
+    color: #f8fafc;
+}
+.dark .edit-form-close-btn {
+    background: #334155;
+    border-color: #475569;
+    color: #94a3b8;
+}
+.dark .edit-form-close-btn:hover {
+    background: #475569;
+    color: #f8fafc;
+}
+.dark .edit-field label {
+    color: #94a3b8;
+}
+.dark .edit-field input,
+.dark .edit-field textarea,
+.dark .edit-field select {
+    background: #0f172a;
+    border-color: #334155;
+    color: #f8fafc;
+}
+.dark .edit-form-actions {
+    background: #1e293b;
+    border-color: #334155;
+}
+.dark .edit-cancel-btn {
+    background: #334155;
+    border-color: #475569;
+    color: #cbd5e1;
+}
+.dark .edit-cancel-btn:hover {
+    background: #475569;
+    color: #f8fafc;
+}
+.dark .close-confirm-banner {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+.dark .close-confirm-text {
+    color: #fcd34d;
+}
+.dark .close-confirm-cancel {
+    background: #334155;
+    border-color: #475569;
+    color: #cbd5e1;
+}
+.dark .close-confirm-cancel:hover {
+    background: #475569;
+    color: #f8fafc;
+}
