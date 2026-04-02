@@ -81,3 +81,19 @@ Use these credentials to explore the platform locally:
 
 ---
 *Note: These accounts are for development and local testing purposes only.*
+
+## 🧪 Testing
+
+1. Backend tests: `npm test` from `backend/backend` (add tests in `tests/` if needed).
+2. Frontend checks: `npm run lint` and `npm run test` from `frontend`.
+
+## 🤝 Contributing
+
+- Fork the repository.
+- Create a feature branch (`git checkout -b feature/<name>`).
+- Commit changes with clear messages.
+- Open a pull request for review.
+
+## 📄 License
+
+This project is licensed under the MIT License. See `LICENSE` for details.
