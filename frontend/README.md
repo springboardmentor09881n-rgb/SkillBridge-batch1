@@ -1,4 +1,4 @@
-# 🌟 SkillBridge
+# SkillBridge
 
 **Bridging the gap between passionate volunteers and impactful NGOs.**
 
@@ -6,15 +6,15 @@ SkillBridge is a modern, high-performance platform designed to streamline volunt
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
-### 🏢 For NGOs
+###  For NGOs
 - **Comprehensive Dashboard**: Manage all your volunteering opportunities in one place.
 - **Organization Profile**: Showcase your mission, website, and impact.
 - **Opportunity Lifecycle**: Create, update, and manage the status of volunteering events.
 - **Talent Discovery**: Connect with volunteers who have the specific skills you need.
 
-### 🤝 For Volunteers
+### For Volunteers
 - **Personalized Dashboard**: Track your contributions and upcoming opportunities.
 - **Discover Opportunities**: Filter and find events that match your interests and schedule.
 - **Skill Showcase**: Create a profile that highlights your expertise.
@@ -22,7 +22,7 @@ SkillBridge is a modern, high-performance platform designed to streamline volunt
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 SkillBridge is built using modern web technologies to ensure a smooth, responsive, and premium experience:
 
@@ -35,7 +35,7 @@ SkillBridge is built using modern web technologies to ensure a smooth, responsiv
 
 ---
 
-## 📦 Project Structure
+##  Project Structure
 
 ```text
 frontend/
@@ -53,7 +53,7 @@ frontend/
 
 ---
 
-## ⚙️ Getting Started
+##  Getting Started
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/) (v18 or higher recommended)
@@ -85,7 +85,7 @@ frontend/
 
 ---
 
-## 🎨 UI/UX Excellence
+##  UI/UX Excellence
 
 SkillBridge follows a high-end design philosophy:
 - **Glassmorphism**: Subtle transparencies and blurs for a premium feel.
@@ -95,11 +95,11 @@ SkillBridge follows a high-end design philosophy:
 
 ---
 
-## 📄 License
+##  License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
 
-<p align="center">Made with ❤️ for the community</p>
+<p align="center">Made with love for the community</p>
 
