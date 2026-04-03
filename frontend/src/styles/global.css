@@ -1,0 +1,249 @@
+@import './variables.css';
+
+/* SkillBridge Premium Design System Tokens */
+:root {
+    --sb-blue-primary: #2563eb;
+    --sb-blue-dark: #1e40af;
+    --sb-blue-light: #eff6ff;
+    --sb-blue-gradient: linear-gradient(135deg, #2563eb, #1e40af);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background);
+    color: var(--text-main);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* ─── Global Navbar & Unified Blue Branding ─── */
+.dashboard-navbar, .v-navbar {
+    height: 70px !important;
+    background: var(--sb-blue-gradient) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    width: 100% !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 1000 !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2) !important;
+    display: block !important;
+}
+
+/* Inner Container for centering and distribution (Used in NGO and Volunteer) */
+.dashboard-navbar > div, .v-navbar-inner {
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 70px !important;
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    padding: 0 2rem !important;
+}
+
+/* Ensure horizontal layout for internal grid children */
+.navbar-left, .v-nav-left, .navbar-center, .v-nav-links, .navbar-right, .v-nav-right {
+    display: flex !important;
+    align-items: center !important;
+    height: 70px !important;
+}
+
+/* Force icons in both types of navbars to be white - targeting all SVGs */
+.dashboard-navbar svg, 
+.v-navbar svg,
+.dashboard-navbar .lucide,
+.v-navbar .lucide {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+    fill: none !important; /* Ensure stroke-based icons don't fill */
+}
+
+/* Navbar Interior Layout Distribution */
+.navbar-left, .v-nav-left {
+    display: flex !important;
+    align-items: center !important;
+    height: 70px !important;
+}
+
+.navbar-center, .v-nav-links {
+    gap: 2.5rem !important; /* Fixed premium spacing */
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    min-width: max-content !important;
+}
+
+.navbar-right, .v-nav-right {
+    display: flex !important;
+    flex-direction: row !important; /* Force horizontal iconic links */
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 1.25rem !important;
+    height: 70px !important;
+    padding-right: 1.5rem !important;
+}
+
+.navbar-logo, .v-logo {
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    letter-spacing: -0.02em !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.navbar-link, .v-nav-item {
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 1) !important;
+    text-decoration: none !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    height: 70px !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 0.5rem !important;
+    position: relative !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+}
+
+.navbar-link:hover, .v-nav-item:hover {
+    color: #ffffff !important;
+}
+
+.navbar-link.active, .v-nav-item.active {
+    color: #ffffff !important;
+    position: relative !important;
+}
+
+.navbar-link.active::after, .v-nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2rem;
+    height: 4px;
+    background: white;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 -2px 10px rgba(255, 255, 255, 0.4);
+}
+
+/* Icon Buttons & Theme Toggle Styling */
+.navbar-icon-btn, .v-icon-btn, .theme-toggle-btn {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 50% !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+}
+
+.navbar-icon-btn:hover, .v-icon-btn:hover, .theme-toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* ─── Role Badges (Nav Level) ─── */
+.navbar-role-badge, .v-user-role {
+    padding: 0.25rem 0.75rem !important;
+    border-radius: 9999px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+}
+
+.ngo-badge, .v-user-role {
+    background-color: #eff6ff !important;
+    color: #2563eb !important;
+    border: 1px solid #dbeafe !important;
+}
+
+.volunteer-badge {
+    background-color: #f0fdf4 !important;
+    color: #166534 !important;
+    border: 1px solid #dcfce7 !important;
+}
+
+.dark .ngo-badge, .dark .v-user-role {
+    background-color: rgba(37, 99, 235, 0.1) !important;
+    color: #60a5fa !important;
+    border-color: rgba(37, 99, 235, 0.3) !important;
+}
+
+
+/* Container Offsets for fixed Navbars (NGO & Volunteer) */
+.volunteer-dashboard-container, .ngo-dashboard-container {
+    padding-top: 70px !important;
+}
+
+/* Force horizontal layout for specific dashboard sections */
+.dashboard-layout {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+}
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.gap-2 { gap: var(--spacing-2); }
+.gap-4 { gap: var(--spacing-4); }
+.grid { display: grid; }
+.hidden { display: none; }
+.text-sm { font-size: var(--font-size-sm); }
+.text-lg { font-size: var(--font-size-lg); }
+.font-bold { font-weight: var(--font-weight-bold); }
+.text-secondary { color: var(--text-secondary); }
+.mt-4 { margin-top: var(--spacing-4); }
+.mb-4 { margin-bottom: var(--spacing-4); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: var(--radius-md);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }

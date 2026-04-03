@@ -1,0 +1,352 @@
+@import "tailwindcss";
+
+/* Enable class-based dark mode for Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+/* Theme Variables for Tailwind 4 */
+@theme {
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-primary-light: #eff6ff;
+    --color-secondary: #0ea5e9;
+
+    /* Semantic Colors */
+    --bg-main: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-elevated: #ffffff;
+
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+
+    --border-color: #e2e8f0;
+    --border-hover: #cbd5e1;
+
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --radius-max: 3rem;
+    --radius-med: 2rem;
+}
+
+/* Dark Mode Overrides */
+.dark {
+    --bg-main: #020617;
+    --bg-surface: #0f172a;
+    --bg-elevated: #1e293b;
+
+    --text-primary: #f8fafc;
+    --text-secondary: #e2e8f0;
+    --text-muted: #94a3b8;
+
+    --border-color: #1e293b;
+    --border-hover: #334155;
+
+    --color-primary-light: rgba(59, 130, 246, 0.15);
+}
+
+/* Base Reset & Global Styles */
+@layer base {
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background-color: var(--bg-main);
+        color: var(--text-primary);
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        letter-spacing: -0.025em;
+        line-height: 1.25;
+        color: var(--text-primary);
+    }
+
+    button {
+        cursor: pointer;
+    }
+}
+
+/* Custom Utilities (Tailwind v4 syntax) */
+@utility glass {
+    background-color: var(--bg-surface);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.welcome-modal-content {
+    background: rgba(255, 255, 255, 0.75); /* Increased opacity for readability */
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-radius: 2rem;
+    width: 100%;
+    max-width: 500px;
+    padding: 3.5rem 2.5rem;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.dark .welcome-modal-content {
+    background: rgba(15, 23, 42, 0.85); /* Slightly darker for contrast */
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.dark .glass {
+    background-color: rgba(15, 23, 42, 0.8) !important;
+}
+
+@utility premium-card {
+    background-color: var(--bg-surface);
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        border-color: var(--border-hover);
+    }
+}
+
+@utility premium-shadow {
+    box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.1);
+}
+
+@utility interactive-card {
+    cursor: pointer;
+
+    &:hover {
+        transform: translateY(-0.25rem);
+    }
+}
+
+@utility premium-dropdown {
+    width: 100%;
+    padding: 0.625rem 2.5rem 0.625rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    background-color: var(--bg-surface);
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+
+    &:hover {
+        border-color: var(--border-hover);
+        background-color: var(--bg-main);
+    }
+
+    &:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+}
+
+@utility subheading {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+@utility badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+}
+
+@utility badge-blue {
+    background-color: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #dbeafe;
+}
+
+@utility badge-green {
+    background-color: #ecfdf5;
+    color: #047857;
+    border: 1px solid #d1fae5;
+}
+
+@utility badge-yellow {
+    background-color: #fffbeb;
+    color: #b45309;
+    border: 1px solid #fef3c7;
+}
+
+@utility badge-gray {
+    background-color: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+}
+
+/* Scrollbar Styles */
+@layer base {
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: var(--bg-main);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #cbd5e1;
+        border-radius: 9999px;
+        border: 2px solid var(--bg-main);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: var(--border-hover);
+    }
+}
+
+/* Global Navbar & Badge Styles - Unified Blue Branding */
+.dashboard-navbar, .v-navbar {
+    height: 70px !important;
+    background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    width: 100% !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 1000 !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2) !important;
+}
+
+/* Force icons in both types of navbars to be white - targeting all SVGs */
+.dashboard-navbar svg, 
+.v-navbar svg,
+.dashboard-navbar .lucide,
+.v-navbar .lucide {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+}
+
+/* Common Badge Styling */
+.navbar-role-badge, .v-user-role {
+    padding: 0.25rem 0.75rem !important;
+    border-radius: 9999px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+}
+
+/* Standardized NGO/Volunteer Pill Colors */
+.ngo-badge, .v-user-role {
+    background-color: #eff6ff !important;
+    color: #2563eb !important;
+    border: 1px solid #dbeafe !important;
+}
+
+.volunteer-badge {
+    background-color: #f0fdf4 !important;
+    color: #166534 !important;
+    border: 1px solid #dcfce7 !important;
+}
+
+.dark .ngo-badge, .dark .v-user-role {
+    background-color: rgba(37, 99, 235, 0.1) !important;
+    color: #60a5fa !important;
+    border-color: rgba(37, 99, 235, 0.3) !important;
+}
+
+/* Active Nav state */
+.navbar-link.active, .v-nav-item.active {
+    color: #ffffff !important;
+    border-bottom: 3px solid #ffffff !important;
+}
+
+/* Navbar Interior Layout - Restoration */
+.navbar-left, .v-nav-left {
+    display: flex !important;
+    align-items: center !important;
+    height: 70px !important;
+}
+
+.navbar-center, .v-nav-links {
+    display: flex !important;
+    gap: 3.5rem !important; /* Increased gap for clarity */
+    align-items: center !important;
+    height: 70px !important;
+}
+
+.navbar-right, .v-nav-right {
+    display: flex !important;
+    flex-direction: row !important; /* Force horizontal */
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 1rem !important; /* Standardized gap */
+    height: 70px !important;
+    padding-right: 1.5rem !important;
+}
+
+.navbar-logo, .v-logo {
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    letter-spacing: -0.02em !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.navbar-link, .v-nav-item {
+    font-size: 0.9375rem !important;
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    cursor: pointer !important;
+    padding: 0 0.5rem !important;
+    transition: all 0.2s !important;
+    height: 70px !important;
+    display: flex !important;
+    align-items: center !important;
+    border-bottom: 3px solid transparent !important;
+    text-decoration: none !important;
+}
+
+/* Icon Buttons in Nav */
+.navbar-icon-btn, .v-icon-btn, .theme-toggle-btn {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 50% !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+}
+
+.navbar-icon-btn:hover, .v-icon-btn:hover, .theme-toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}

@@ -1,0 +1,376 @@
+.applications-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.apps-header h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.25rem;
+}
+
+.apps-header p {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.apps-controls-card {
+    background-color: var(--bg-surface);
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.search-box {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    color: #94a3b8;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.625rem 1rem 0.625rem 2.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    transition: all 0.2s;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background-color: var(--bg-surface);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter-dropdown {
+    position: relative;
+    width: 200px;
+}
+
+.filter-dropdown select {
+    width: 100%;
+    padding: 0.625rem 2.5rem 0.625rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    background-color: var(--bg-surface);
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.filter-dropdown select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.dropdown-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    pointer-events: none;
+}
+
+.reset-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.reset-btn:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.status-tabs-container {
+    display: flex;
+    background-color: var(--bg-main);
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    border: 1px solid var(--border-color);
+    width: fit-content;
+}
+
+.status-tab {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    border-radius: 0.375rem;
+    transition: all 0.2s;
+}
+
+.status-tab.active {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.applications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.application-card {
+    background-color: var(--bg-surface);
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.title-section h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.applicant-info {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-badge.pending {
+    background-color: #fffbeb;
+    color: #d97706;
+}
+
+.status-badge.accepted {
+    background-color: #f0fdf4;
+    color: #16a34a;
+}
+
+.status-badge.rejected {
+    background-color: #fef2f2;
+    color: #dc2626;
+}
+
+.message-bubble {
+    background-color: var(--bg-main);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+}
+
+.message-bubble p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.card-tags {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.app-tag {
+    background-color: #eff6ff;
+    color: #3b82f6;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.btn-accept,
+.btn-reject,
+.btn-revert {
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid var(--border-color);
+}
+
+.btn-accept {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+}
+
+.btn-accept:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.btn-reject {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+}
+
+.btn-reject:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.btn-revert {
+    background-color: var(--bg-surface);
+    color: var(--text-secondary);
+}
+
+.btn-message {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-message:hover {
+    background-color: #f8fafc;
+}
+
+/* ─── Dark Mode Overrides (Matched to OpportunityFeed) ─── */
+.dark .apps-header h1 {
+    color: #f8fafc;
+}
+.dark .apps-header p {
+    color: #94a3b8;
+}
+.dark .apps-controls-card,
+.dark .application-card {
+    background-color: #1e293b;
+    border-color: #334155;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+.dark .search-box input,
+.dark .filter-dropdown select,
+.dark .status-tabs-container,
+.dark .message-bubble {
+    background-color: #0f172a;
+    border-color: #334155;
+    color: #f8fafc;
+}
+.dark .search-icon,
+.dark .dropdown-icon {
+    color: #64748b;
+}
+.dark .search-box input:focus,
+.dark .filter-dropdown select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+.dark .reset-btn,
+.dark .btn-accept,
+.dark .btn-reject,
+.dark .btn-revert,
+.dark .btn-message {
+    background-color: #334155;
+    border-color: #475569;
+    color: #f8fafc;
+}
+.dark .reset-btn:hover,
+.dark .btn-accept:hover,
+.dark .btn-reject:hover,
+.dark .btn-message:hover {
+    background-color: #475569;
+}
+.dark .btn-revert {
+    color: #cbd5e1;
+}
+.dark .status-tab {
+    color: #94a3b8;
+}
+.dark .status-tab.active {
+    background-color: #1e293b;
+    color: #f8fafc;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+.dark .title-section h3 {
+    color: #f8fafc;
+}
+.dark .applicant-info,
+.dark .message-bubble p {
+    color: #cbd5e1;
+}
+.dark .app-tag {
+    background-color: rgba(37, 99, 235, 0.2);
+    color: #93c5fd;
+}
+.dark .status-badge.pending {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: #fcd34d;
+}
+.dark .status-badge.accepted {
+    background-color: rgba(34, 197, 94, 0.15);
+    color: #86efac;
+}
+.dark .status-badge.rejected {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+}
